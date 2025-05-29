@@ -1,6 +1,0 @@
-CREATE TABLE drink (
-    id integer GENERATED ALWAYS AS IDENTITY, 
-    name varchar(255), 
-    ingredients varchar(255)[], 
-    steps text
-);
