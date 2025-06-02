@@ -8,7 +8,7 @@ CREATE TABLE drink (
 
 CREATE TABLE ingredient (
     ingredient_id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name varchar(255) NOT NULL
+    name varchar(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE drink_ingredient (
