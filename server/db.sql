@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS drink, ingredient, drink_ingredient;
+DROP TABLE IF EXISTS drink, ingredient, drink_ingredient, users;
 
 CREATE TABLE drink (
     drink_id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY, 
@@ -17,6 +17,15 @@ CREATE TABLE drink_ingredient (
     amount real NOT NULL,
     unit VARCHAR(255),
     PRIMARY KEY (drink_id, ingredient_id)
+);
+
+CREATE TABLE users (
+    user_id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    user_name varchar(255) NOT NULL UNIQUE,
+    password varchar(255) NOT NULL,
+    email varchar(255) NOT NULL UNIQUE,
+    created_drinks integer[],
+    starred_drinks integer[]
 );
 
 INSERT INTO drink (name) VALUES ('drink1'), ('drink2');

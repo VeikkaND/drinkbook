@@ -1,8 +1,7 @@
 require("dotenv").config()
 const express = require("express")
 const router = express.Router()
-const pgp = require("pg-promise")()
-const db = pgp(`postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`)
+const db = require("../util/db")
 
 //get ALL drinks
 router.get("/", async (req, res) => {
@@ -83,7 +82,7 @@ router.post("/", async (req, res) => {
                 `INSERT INTO drink_ingredient
                 (drink_id, ingredient_id, amount, unit)
                 VALUES ($/drink_id/, $/ingredient_id/,
-                $/amount/, $/unit/)`, 
+                $/amount/, $/unit/);`, 
                 {drink_id: data.drink_id, 
                     ingredient_id: ingredient_ids[i].ingredient_id, 
                     amount: ingredients[i].amount, 
@@ -107,7 +106,7 @@ router.delete("/", async (req, res) => {
     const id = req.body.id
     try {
         await db.none(
-            `DELETE FROM drink WHERE drink_id = $/id/`, {id}
+            `DELETE FROM drink WHERE drink_id = $/id/;`, {id}
         )
         res.status(200).send(id)
     } catch (err) {
