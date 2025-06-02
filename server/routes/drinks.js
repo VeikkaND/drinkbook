@@ -76,7 +76,7 @@ router.post("/", async (req, res) => {
             VALUES ($/name/, $/steps/) RETURNING drink_id;`, 
             {name, steps}
         )
-        //insert all ingredients in drink to db
+        //insert all ingredients in drink to db (drink_ingredient)
         for(let i = 0; i < ingredient_ids.length; i++) {
             console.log(ingredient_ids[i])
             await db.none(
@@ -91,9 +91,9 @@ router.post("/", async (req, res) => {
                 }
             )
         }
-        
+        res.status(201)
     } catch(err) {
-        console.log(err)
+        res.status(400).send(err.name)
     }
 })
 
@@ -103,8 +103,17 @@ router.put("/", (req, res) => {
 })
 
 //delete drink
-router.delete("/", (req, res) => {
-
+router.delete("/", async (req, res) => {
+    const id = req.body.id
+    try {
+        await db.none(
+            `DELETE FROM drink WHERE drink_id = $/id/`, {id}
+        )
+        res.status(200).send(id)
+    } catch (err) {
+        console.log(err)
+        res.status(400).send(err.name)
+    }
 })
 
 module.exports = router
