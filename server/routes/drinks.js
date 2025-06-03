@@ -14,6 +14,35 @@ router.get("/", async (req, res) => {
     
 })
 
+//get all different drink names
+router.get("/names", async (req, res) => {
+    try {
+        const names = await db.any(
+            "SELECT (name) FROM drink GROUP BY name;"
+        )
+        res.status(200).send(names)
+    } catch (err) {
+        res.status(400).send(err.name)
+    }
+})
+
+//get all matching drinks with input string
+router.get("/drinks", async (req, res) => {
+    const input = req.query.input
+    const filter = '%' + input + '%'
+    try {
+        const drinks = await db.any(
+            `SELECT * FROM drink 
+            WHERE drink.name LIKE $/filter/;`
+            ,{filter}
+        )
+        res.status(200).send(drinks)
+    } catch (err) {
+        console.log(err)
+        res.status(400).send("not found")
+    }
+})
+
 //get drinks by name
 router.get("/:drink", async (req, res) => {
     const drink_name = req.params.drink
@@ -90,7 +119,7 @@ router.post("/", async (req, res) => {
                 }
             )
         }
-        res.status(201)
+        res.status(201).send("drink created")
     } catch(err) {
         res.status(400).send(err.name)
     }
