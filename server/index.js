@@ -6,9 +6,9 @@ const users = require("./routes/users")
 const ingredients = require("./routes/ingredient")
 
 app.use(express.json())
-app.use("/api/drink", drinks)
-app.use("/api/user", users)
-app.use("/api/ingredient", ingredients)
+app.use("/drink", drinks)
+app.use("/user", users)
+app.use("/ingredient", ingredients)
 
 app.listen(port, () => {
     console.log(`server running on port ${port}`)

@@ -3,7 +3,8 @@ DROP TABLE IF EXISTS drink, ingredient, drink_ingredient, users;
 CREATE TABLE drink (
     drink_id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY, 
     name varchar(255) NOT NULL,
-    steps text
+    steps text,
+    stars integer NOT NULL DEFAULT 0
 );
 
 CREATE TABLE ingredient (

@@ -1,0 +1,10 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid 1px;
+}
+
+.footer {
+    height: 300px;
+    background-color: gainsboro;
+}
