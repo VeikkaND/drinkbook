@@ -44,6 +44,8 @@ router.get("/drinks", async (req, res) => {
 })
 
 //get drinks by name
+//TODO delete, or change address?
+/*
 router.get("/:drink", async (req, res) => {
     const drink_name = req.params.drink
     try {
@@ -56,11 +58,13 @@ router.get("/:drink", async (req, res) => {
     }
     
 })
+*/
 
 //get drink by id
-router.get("/:drink/:id", async (req, res) => {
-    const drink_name = req.params.drink
-    const drink_id = req.params.id
+router.get("/id", async (req, res) => {
+    const drink_name = req.query.drink
+    const drink_id = req.query.id
+    console.log(drink_name, drink_id)
     try {
         const drink = await db.one(
             `SELECT * FROM drink WHERE drink.drink_id = $/drink_id/;`, 

@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useState } from "react"
-import { useSearchParams } from "react-router"
+import { useSearchParams, NavLink } from "react-router"
 import drinkService from "../services/drink"
 
 function Search() {
@@ -15,11 +15,15 @@ function Search() {
         getDrinks()
     }, [])
 
+    // TODO change search result drinks to different view
     return(
         <div>
             <p>search results for {searchParams.get("input")}</p>
             {drinks.map((drink) => 
-                <p key={drink.drink_id}>{drink.name}, stars: {drink.stars}</p>)}
+                <NavLink key={drink.drink_id} 
+                to={`/drink/${drink.name}/${drink.drink_id}`}>
+                    {drink.name}, {drink.stars} stars
+                </NavLink>)}
         </div>
     )
 }

@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from 'react-router'
 import NavBar from './components/NavBar.jsx'
 import Footer from './components/Footer.jsx'
 import Search from './pages/Search.jsx'
+import Drink from './pages/Drink.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -16,6 +17,7 @@ createRoot(document.getElementById('root')).render(
       <Route path='/create' element={<Create />}/>
       <Route path='/drinks' element={<Drinks />}/>
       <Route path='/search' element={<Search />}/>
+      <Route path='/drink/:name/:id' element={<Drink />}/>
     </Routes>
     <Footer />
   </BrowserRouter>

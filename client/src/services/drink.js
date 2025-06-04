@@ -12,4 +12,19 @@ const getDrinksByInput = async (input) => {
     return res.data
 }
 
-export default {getAllDrinkNames, getDrinksByInput}
+const getAllDrinks = async () => {
+    const res = await axios.get("/api/drink/")
+    const drinks = res.data
+    return drinks
+}
+
+const getDrinkById = async (name, id) => {
+    const res = await axios.get(`/api/drink/id`, 
+        {params: {name: name, id: id}})
+    return res.data
+}
+
+export default {getAllDrinkNames, 
+    getDrinksByInput, 
+    getAllDrinks, 
+    getDrinkById}
