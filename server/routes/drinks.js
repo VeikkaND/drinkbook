@@ -64,7 +64,6 @@ router.get("/:drink", async (req, res) => {
 router.get("/id", async (req, res) => {
     const drink_name = req.query.drink
     const drink_id = req.query.id
-    console.log(drink_name, drink_id)
     try {
         const drink = await db.one(
             `SELECT * FROM drink WHERE drink.drink_id = $/drink_id/;`, 
@@ -96,6 +95,8 @@ router.post("/", async (req, res) => {
 
     
     try {
+        //TODO !! create ingredient in db if it doesn't exist !!
+
         //find all ingredient IDs
         const ingredient_ids = await db.any(
             `SELECT (ingredient_id) FROM ingredient 

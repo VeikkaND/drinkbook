@@ -1,12 +1,38 @@
 import { useState } from "react"
-
+import drinkService from "../services/drink"
 
 function Create() {
     const [ingredientList, setIngredientList] = useState([
         {amount: "", unit: "", name: ""}])
+    const [stepList, setStepList] = useState([
+        {text: ""}
+    ])
+    const [name, setName] = useState(null)
 
-    const handleCreate = async () => {
+    const handleCreate = async (event) => {
+        console.log("creating new drink")
+        // change strings in units to numbers
+        ingredientList.forEach((ingredient) => {
+            ingredient.amount = Number(ingredient.amount)
+        })
 
+        //add steps to one string
+        let steps = ""
+        for (let i = 0; i < stepList.length; i++) {
+            const text = stepList[i].text;
+            steps = steps.concat(`${i}. ` + text + "|") // use | as separator 
+        }
+        
+        const newId = await drinkService.createDrink(
+            name, 
+            ingredientList,
+            steps
+        )
+    }
+
+    const handleNameChange = async (event) => {
+        event.preventDefault()
+        setName(event.target.value)
     }
 
     const handleAdd = (event) => {
@@ -28,34 +54,91 @@ function Create() {
     }
 
     const handleChange = (event, i) => {
+        //check if amount is a number
+        if(event.target.name === "amount" && !Number(event.target.value)) {
+            console.log("must be a number")
+            //TODO inform user
+            return
+        }
         const list = [...ingredientList]
         list[i][event.target.name] = event.target.value
         setIngredientList(list)
     }
 
+    const handleStepAdd = (event, i) => {
+        event.preventDefault()
+        if(stepList.length < 20) { // limit steps to 20
+            setStepList([...stepList, {text: ""}])
+        }
+    }
+
+    const handleStepRemove = (event, i) => {
+        event.preventDefault()
+        if(stepList.length > 1) {// only remove if > 1 left
+            const newList = [...stepList]
+            newList.splice(i, 1)
+            console.log(newList)
+            setStepList(newList)
+        }
+    }
+
+    const handleStepChange = (event, i) => {
+        const list = [...stepList]
+        list[i][event.target.name] = event.target.value
+        setStepList(list)
+    }
+    //TODO make fields mandatory etc.
     return(
         <div>
             <h2>Create page here</h2>
             <form onSubmit={handleCreate}>
-                {ingredientList.map((ingredient, i) => {
-                    return(
-                        <div key={i}>
-                            <input name="amount" 
-                            value={ingredient.amount} 
-                            onChange={(e) => handleChange(e, i)}/>
-                            <input name="unit" 
-                            value={ingredient.unit}
-                            onChange={(e) => handleChange(e, i)}/>
-                            <input name="name" 
-                            value={ingredient.name}
-                            onChange={(e) => handleChange(e, i)}/>
-                            <button onClick={(e) => handleRemove(e, i)}>Remove</button>
-                        </div>
-                    )          
-                })}
+                <input name="name" 
+                placeholder="Old Fashioned"
+                onChange={handleNameChange}></input>
                 <div>
-                    <button onClick={handleAdd}>Add</button>
+                    <p>Amount unit name</p>
+                    {ingredientList.map((ingredient, i) => {
+                        return(
+                            <div key={i}>
+                                <input name="amount" 
+                                value={ingredient.amount}
+                                placeholder="1" 
+                                onChange={(e) => handleChange(e, i)}/>
+                                <input name="unit" 
+                                value={ingredient.unit}
+                                placeholder="cl"
+                                onChange={(e) => handleChange(e, i)}/>
+                                <input name="name" 
+                                value={ingredient.name}
+                                placeholder="vodka"
+                                onChange={(e) => handleChange(e, i)}/>
+                                <button onClick={(e) => 
+                                    handleRemove(e, i)}>Remove</button>
+                            </div>
+                        )          
+                    })}
+                    <div>
+                        <button onClick={handleAdd}>Add</button>
+                    </div>
                 </div>
+                <div>
+                    <h3>Guide</h3>
+                    {stepList.map((step, i) => {
+                        return(
+                            <div key={i}>
+                                {i+1 + "."}
+                                <textarea name="text"
+                                value={step.text}
+                                placeholder="do something"
+                                onChange={(e) => handleStepChange(e, i) }/>
+                                <button onClick={(e) => 
+                                    handleStepRemove(e, i)}>Remove</button>
+                            </div>
+                        )
+                    })}
+                    <button onClick={handleStepAdd}>Add</button>
+                </div>
+                <button type="submit">Create</button>
             </form>
         </div>
     )

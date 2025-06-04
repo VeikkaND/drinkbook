@@ -24,7 +24,18 @@ const getDrinkById = async (name, id) => {
     return res.data
 }
 
+const createDrink = async (name, ingredients, steps) => {
+    //TODO add user to drink details in db
+    const res = await axios.post(`/api/drink/`, {
+        name: name,
+        ingredients: ingredients,
+        steps: steps
+    })
+    console.log(res.data)
+}
+
 export default {getAllDrinkNames, 
     getDrinksByInput, 
     getAllDrinks, 
-    getDrinkById}
+    getDrinkById,
+    createDrink}
