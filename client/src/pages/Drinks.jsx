@@ -8,7 +8,6 @@ function Drinks() {
     useEffect(() => {
         const getDrinks = async () => {
             const res = await drinkService.getAllDrinks()
-            console.log(res)
             setDrinks(res)
         }
         getDrinks()

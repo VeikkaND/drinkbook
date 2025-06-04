@@ -7,7 +7,7 @@ function NavBar() {
         <div className="navbar">
             <NavLink to="/">logo here</NavLink>
             <NavLink to="/drinks">Drinks</NavLink>
-            <NavLink>some more text</NavLink>
+            <NavLink to="/create">Create</NavLink>
             <div>
                 <p>login thing</p>
             </div>
