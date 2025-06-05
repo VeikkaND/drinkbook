@@ -1,9 +1,9 @@
-function Highball({color}) {
+function Highball({color, glassColor}) {
     //width="6.3000002mm"
     //height="17.974445mm"
     //style="fill:#e6e6e6;stroke-width:0.264583"
     //style="fill:#FF0000;stroke-width:0.26"
-    console.log(color)
+    //const glassColor = "#d6d6d6"
 
     return(
         <svg
@@ -22,7 +22,7 @@ function Highball({color}) {
             <path
             id="glass"
             strokeWidth={0}
-            fill="gray"
+            fill={glassColor}
             d="m 103.75667,76.2 c -0.02,0 -0.04,0.03 -0.04,0.07 V 94.1 c 0,0.04 0.02,0.07 0.04,0.07 h 0.18 c 0,0 0,0 0.01,0 0,0 0,0 0,0 h 5.83 c 0.01,0.01 0.01,0 0.02,0 h 0.18 c 0.02,0 0.04,-0.03 0.04,-0.07 V 76.29 c 0,-0.04 -0.02,-0.07 -0.04,-0.07 h -0.18 c -0.02,0 -0.04,0.03 -0.04,0.07 v 16.99 c 0,0.01 0,0.01 0,0.02 0,0.13 -0.11,0.16 -0.15,0.17 h -5.5 c -0.04,-0.01 -0.11,-0.04 -0.13,-0.11 V 76.28 c 0,-0.04 -0.02,-0.07 -0.04,-0.07 z" />
             <path id="drink" 
             fill={color}

@@ -2,6 +2,7 @@ import { useState } from "react"
 import drinkService from "../services/drink"
 import Highball from "../components/Highball"
 import { HexColorPicker } from "react-colorful"
+import Cocktail from "../components/Cocktail"
 
 function Create() {
     const [ingredientList, setIngredientList] = useState([
@@ -11,6 +12,7 @@ function Create() {
     ])
     const [name, setName] = useState(null)
     const [color, setColor] = useState("#aabbcc")
+    const [glass, setGlass] = useState("highball")
 
     const handleCreate = async (event) => {
         console.log("creating new drink")
@@ -91,8 +93,24 @@ function Create() {
         setStepList(list)
     }
     
+    const glassColor = "#d6d6d6"
     const changeColor = (color) => {
         setColor(color)
+    }
+
+    const changeGlass = (event) => {
+        setGlass(event.target.value)
+    }
+
+    const glassType = () => {
+        switch(glass) {
+            case "highball":
+                return <Highball color={color} 
+                glassColor={glassColor}/>
+            case "cocktail":
+                return <Cocktail color={color}
+                glassColor={glassColor}/>
+        }
     }
 
     //TODO make fields mandatory etc.
@@ -147,7 +165,11 @@ function Create() {
                     <button onClick={handleStepAdd}>Add</button>
                 </div>
                 <div>
-                    <Highball color={color}/>
+                    <select name="glass" onChange={changeGlass}>
+                        <option value="highball">Highball</option>
+                        <option value="cocktail">Cocktail</option>
+                    </select>
+                    {glassType()}
                     <HexColorPicker color={color} 
                     onChange={changeColor}/>
                 </div>
