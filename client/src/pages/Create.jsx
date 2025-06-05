@@ -1,5 +1,7 @@
 import { useState } from "react"
 import drinkService from "../services/drink"
+import Highball from "../components/Highball"
+import { HexColorPicker } from "react-colorful"
 
 function Create() {
     const [ingredientList, setIngredientList] = useState([
@@ -8,6 +10,7 @@ function Create() {
         {text: ""}
     ])
     const [name, setName] = useState(null)
+    const [color, setColor] = useState("#aabbcc")
 
     const handleCreate = async (event) => {
         console.log("creating new drink")
@@ -87,6 +90,11 @@ function Create() {
         list[i][event.target.name] = event.target.value
         setStepList(list)
     }
+    
+    const changeColor = (color) => {
+        setColor(color)
+    }
+
     //TODO make fields mandatory etc.
     return(
         <div>
@@ -137,6 +145,11 @@ function Create() {
                         )
                     })}
                     <button onClick={handleStepAdd}>Add</button>
+                </div>
+                <div>
+                    <Highball color={color}/>
+                    <HexColorPicker color={color} 
+                    onChange={changeColor}/>
                 </div>
                 <button type="submit">Create</button>
             </form>
