@@ -3,6 +3,8 @@ import { useState } from "react"
 import drinkService from "../services/drink"
 import { useParams } from "react-router"
 import { IngredientList } from "../components/IngredientList"
+import Glass from "../components/Glass"
+import Steps from "../components/Steps"
 
 function Drink() {
     const [drink, setDrink] = useState(null)
@@ -25,9 +27,16 @@ function Drink() {
         <div>
             <div>
                 <h3>{drink ? drink.drink.name : "Drink"}</h3>
+
+                {drink ? <Glass glass={drink.drink.glass} 
+                    color={drink.drink.color}/> 
+                : <p>loading image</p>}
+
                 {drink ? <IngredientList drink={drink}/> 
                 : <p>loading ingredients</p>}
-                <p>some more text here about the drink</p>
+
+                {drink ? <Steps text={drink.drink.steps}/> 
+                : <p>loading steps</p>}
             </div>
             <div>
                 <h4>other recipes</h4>
