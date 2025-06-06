@@ -159,6 +159,8 @@ function Create() {
                     <select name="glass" onChange={changeGlass}>
                         <option value="highball">Highball</option>
                         <option value="cocktail">Cocktail</option>
+                        <option value="lowball">Lowball</option>
+                        <option value="champagne">Champagne</option>
                     </select>
                     <Glass glass={glass} color={color}/>
                     <HexColorPicker color={color} 
