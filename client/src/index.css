@@ -8,3 +8,18 @@
     height: 300px;
     background-color: gainsboro;
 }
+
+.drinks{
+    display: flex;
+}
+
+.drinklink {
+    border: solid 1px;
+    width: 150px;
+    cursor: pointer;
+    margin-inline: 2px;
+}
+
+.drinklink-container {
+    text-align: center;
+}

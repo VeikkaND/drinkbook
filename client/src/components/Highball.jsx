@@ -1,14 +1,20 @@
-function Highball({color, glassColor}) {
+function Highball({color, glassColor, size}) {
     //width="6.3000002mm"
     //height="17.974445mm"
     //style="fill:#e6e6e6;stroke-width:0.264583"
     //style="fill:#FF0000;stroke-width:0.26"
     //const glassColor = "#d6d6d6"
 
+    //change sizeScale if necessary
+    let sizeScale = 1
+    if(size) {
+        sizeScale = 0.4
+    }
+
     return(
         <svg
-            width="35mm"
-            height="100mm"
+            width={`${35*sizeScale}mm`}
+            height={`${100*sizeScale}mm`}
             viewBox="0 0 6.3000002 17.974445"
             version="1.1"
             id="svg1"

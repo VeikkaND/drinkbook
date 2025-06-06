@@ -1,10 +1,16 @@
-function Cocktail({color, glassColor}) {
+function Cocktail({color, glassColor, size}) {
     //style="fill:#e6e6e6;fill-opacity:1;stroke-width:0.264583"
+    
+    //change sizeScale if necessary
+    let sizeScale = 1
+    if(size) {
+        sizeScale = 0.4
+    }
 
     return(
         <svg
-            width="73mm"
-            height="100mm"
+            width={`${73*sizeScale}mm`}
+            height={`${100*sizeScale}mm`}
             viewBox="0 0 6 17.703308"
             version="1.1"
             id="svg1"
