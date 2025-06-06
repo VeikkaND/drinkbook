@@ -87,12 +87,11 @@ router.get("/id", async (req, res) => {
 router.post("/", async (req, res) => {
     const name = req.body.name
     const steps = req.body.steps
+    const color = req.body.color
+    const glass = req.body.glass
     const ingredients = req.body.ingredients
     const ingredient_names = ingredients.map(
         (i) => i.name.toLowerCase())
-    console.log(name, steps, ingredients)
-    console.log(ingredient_names)
-
     
     try {
         //TODO !! create ingredient in db if it doesn't exist !!
@@ -105,9 +104,10 @@ router.post("/", async (req, res) => {
         )
         //insert new drink into db
         const data = await db.one(
-            `INSERT INTO drink (name, steps) 
-            VALUES ($/name/, $/steps/) RETURNING drink_id;`, 
-            {name, steps}
+            `INSERT INTO drink (name, steps, color, glass) 
+            VALUES ($/name/, $/steps/, $/color/, $/glass/) 
+            RETURNING drink_id;`, 
+            {name, steps, color, glass}
         )
         //insert all ingredients in drink to db (drink_ingredient)
         for(let i = 0; i < ingredient_ids.length; i++) {

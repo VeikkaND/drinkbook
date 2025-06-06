@@ -31,7 +31,9 @@ function Create() {
         const newId = await drinkService.createDrink(
             name, 
             ingredientList,
-            steps
+            steps,
+            color,
+            glass
         )
     }
 

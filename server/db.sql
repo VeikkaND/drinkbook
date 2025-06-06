@@ -4,7 +4,9 @@ CREATE TABLE drink (
     drink_id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY, 
     name varchar(255) NOT NULL,
     steps text,
-    stars integer NOT NULL DEFAULT 0
+    stars integer NOT NULL DEFAULT 0,
+    color varchar(255) NOT NULL,
+    glass varchar(255) NOT NULL
 );
 
 CREATE TABLE ingredient (
@@ -29,7 +31,8 @@ CREATE TABLE users (
     starred_drinks integer[]
 );
 
-INSERT INTO drink (name) VALUES ('drink1'), ('drink2');
+INSERT INTO drink (name, color, glass) 
+VALUES ('drink1', 'red', 'highball'), ('drink2', 'red', 'cocktail');
 
 INSERT INTO ingredient (name) VALUES 
 ('vodka'), ('juice'), ('lime');
