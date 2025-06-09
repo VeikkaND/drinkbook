@@ -3,6 +3,7 @@ import drinkService from "../services/drink"
 import { useState } from "react"
 import { NavLink } from "react-router"
 import DrinkLink from "../components/DrinkLink"
+import SearchInput from "../components/SearchInput"
 
 function Drinks() {
     const [drinks, setDrinks] = useState([])
@@ -24,6 +25,7 @@ function Drinks() {
     return(
         <div>
             <h2>Drinks page</h2>
+            <SearchInput />
             <p>sort by:</p>
             <select>
                 <option>something</option>

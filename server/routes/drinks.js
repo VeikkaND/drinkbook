@@ -29,11 +29,11 @@ router.get("/names", async (req, res) => {
 //get all matching drinks with input string
 router.get("/drinks", async (req, res) => {
     const input = req.query.input
-    const filter = '%' + input + '%'
+    const filter = '%' + input.toLowerCase() + '%'
     try {
         const drinks = await db.any(
             `SELECT * FROM drink 
-            WHERE drink.name LIKE $/filter/;`
+            WHERE LOWER(drink.name) LIKE $/filter/;`
             ,{filter}
         )
         res.status(200).send(drinks)
