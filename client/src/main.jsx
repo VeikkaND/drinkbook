@@ -8,6 +8,8 @@ import NavBar from './components/NavBar.jsx'
 import Footer from './components/Footer.jsx'
 import Search from './pages/Search.jsx'
 import Drink from './pages/Drink.jsx'
+import FindDrink from './pages/FindDrink.jsx'
+import Ingredient from './pages/Ingredient.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -18,6 +20,8 @@ createRoot(document.getElementById('root')).render(
       <Route path='/drinks' element={<Drinks />}/>
       <Route path='/search' element={<Search />}/>
       <Route path='/drink/:name/:id' element={<Drink />}/>
+      <Route path='/ingredient/:name' element={<Ingredient />}/>
+      <Route path='/find' element={<FindDrink />}/>
     </Routes>
     <Footer />
   </BrowserRouter>
