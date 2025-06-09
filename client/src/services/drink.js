@@ -37,8 +37,16 @@ const createDrink = async (
         console.log(res.data)
 }
 
+const starDrink = async (id) => {
+    const res = await axios.put(`/api/drink/id/star`, {
+        drink_id: id
+    })
+}
+
 export default {getAllDrinkNames, 
     getDrinksByInput, 
     getAllDrinks, 
     getDrinkById,
-    createDrink}
+    createDrink,
+    starDrink
+}

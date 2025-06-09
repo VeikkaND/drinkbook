@@ -83,6 +83,21 @@ router.get("/id", async (req, res) => {
     }
 })
 
+//add a star to a drink
+//TODO log to user and add a way to remove the star
+router.put("/id/star", async (req, res) => {
+    const drink_id = req.body.drink_id
+    try {
+        await db.none(
+            `UPDATE drink SET stars = stars + 1 
+            WHERE drink_id = '${drink_id}'`
+        )
+        res.status(200).send(drink_id)
+    } catch (err) {
+        res.status(400).send(err.name)
+    }
+})
+
 //new drink
 router.post("/", async (req, res) => {
     const name = req.body.name
