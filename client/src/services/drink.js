@@ -43,10 +43,16 @@ const starDrink = async (id) => {
     })
 }
 
+const getTop5 = async () => {
+    const res = await axios.get(`/api/drink/top5`)
+    return res.data
+}
+
 export default {getAllDrinkNames, 
     getDrinksByInput, 
     getAllDrinks, 
     getDrinkById,
     createDrink,
-    starDrink
+    starDrink,
+    getTop5
 }

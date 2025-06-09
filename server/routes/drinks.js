@@ -60,6 +60,17 @@ router.get("/:drink", async (req, res) => {
 })
 */
 
+router.get("/top5", async (req, res) => {
+    try {
+        const drinks = await db.many(
+            `SELECT * FROM drink ORDER BY stars DESC limit 5`
+        )
+        res.status(200).send(drinks)
+    } catch (err) {
+        res.status(400).send(err.name)
+    }
+})
+
 //get drink by id
 router.get("/id", async (req, res) => {
     const drink_name = req.query.drink
