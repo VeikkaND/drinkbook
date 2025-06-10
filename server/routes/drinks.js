@@ -43,22 +43,34 @@ router.get("/drinks", async (req, res) => {
     }
 })
 
-//get drinks by name
-//TODO delete, or change address?
-/*
-router.get("/:drink", async (req, res) => {
-    const drink_name = req.params.drink
+//get drinks with the same name
+router.get("/name", async (req, res) => {
+    const input = req.query.input
+    const name = input.toLowerCase()
     try {
         const drinks = await db.any(
-            `SELECT * FROM drink WHERE drink.name = $/drink_name/;`, 
-            {drink_name})
+            `SELECT * FROM drink WHERE LOWER(drink.name)
+            LIKE $/name/;`,
+            {name}
+        )
+        await Promise.all(
+            drinks.map(async (drink) => {
+                const drink_id = drink.drink_id
+                const ingredients = await db.many(
+                    `SELECT amount, unit, name FROM drink_ingredient 
+                    INNER JOIN ingredient ON 
+                    ingredient.ingredient_id = drink_ingredient.ingredient_id
+                    WHERE drink_ingredient.drink_id = $/drink_id/;`, 
+                    {drink_id}
+                )
+                drink.ingredients = ingredients
+            })
+        )
         res.status(200).send(drinks)
     } catch (err) {
-        res.status(400).send(err)
+        res.status(400).send(err.name)
     }
-    
 })
-*/
 
 //get top 5 drinks by stars
 router.get("/top5", async (req, res) => {

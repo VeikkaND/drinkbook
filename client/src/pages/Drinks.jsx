@@ -15,22 +15,20 @@ function Drinks() {
         getDrinks()
     }, [])
 
-    /*
-            <NavLink key={drink.drink_id} 
-                to={`/drink/${drink.name}/${drink.drink_id}`}>
-                    {drink.name}, {drink.stars} stars
-                </NavLink>
-    */
-
     return(
         <div>
             <h2>Drinks page</h2>
             <SearchInput />
-            <p>sort by:</p>
-            <select>
-                <option>something</option>
-                <option>something else</option>
-            </select>
+            <label>
+                sort by:
+                <select>
+                    <option value={"stars"}>
+                        Stars</option>
+                    <option value={"alphabetical"}>
+                        Alphabetical</option>
+                </select>
+            </label>
+            
             <div className="drinks">
                 {drinks.map((drink) => 
                     <DrinkLink key={drink.drink_id} drink={drink}/>)}

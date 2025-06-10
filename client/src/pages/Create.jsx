@@ -33,7 +33,6 @@ function Create() {
 
     const handleCreate = async (event) => {
         event.preventDefault()
-        console.log("creating new drink")
         // change strings in units to numbers
         ingredientList.forEach((ingredient) => {
             ingredient.amount = Number(ingredient.amount)
@@ -123,7 +122,6 @@ function Create() {
         if(stepList.length > 1) {// only remove if > 1 left
             const newList = [...stepList]
             newList.splice(i, 1)
-            console.log(newList)
             setStepList(newList)
         }
     }

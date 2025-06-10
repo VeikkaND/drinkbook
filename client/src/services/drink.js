@@ -12,6 +12,13 @@ const getDrinksByInput = async (input) => {
     return res.data
 }
 
+const getDrinksWithSameName = async (input) => {
+    const res = await axios.get("/api/drink/name",
+        {params: {input: input}}
+    )
+    return res.data
+}
+
 const getAllDrinks = async () => {
     const res = await axios.get("/api/drink/")
     const drinks = res.data
@@ -62,5 +69,6 @@ export default {getAllDrinkNames,
     createDrink,
     starDrink,
     getTop5,
-    getDrinksWithIngredient
+    getDrinksWithIngredient,
+    getDrinksWithSameName
 }
