@@ -60,6 +60,7 @@ router.get("/:drink", async (req, res) => {
 })
 */
 
+//get top 5 drinks by stars
 router.get("/top5", async (req, res) => {
     try {
         const drinks = await db.many(
@@ -94,6 +95,35 @@ router.get("/id", async (req, res) => {
     }
 })
 
+//get drinks with input ingredient
+router.get("/ingredient", async (req, res) => {
+    const ingredient_name = req.query.ingredient
+    try {
+        const obj = await db.one(
+            `SELECT ingredient_id FROM ingredient 
+            WHERE name = $/ingredient_name/;`, 
+            {ingredient_name}
+        )
+
+        const id = obj.ingredient_id
+        const drink_ids = await db.any(
+            `SELECT drink_id FROM drink_ingredient 
+            WHERE ingredient_id = $/id/;`, 
+            {id}
+        )
+        
+        const ids = drink_ids.map((_id) => _id = _id.drink_id)
+        const drinks = await db.any(
+            `SELECT * FROM drink 
+            WHERE drink_id IN ($/ids:csv/);`, 
+            {ids}
+        )
+        res.status(200).send(drinks)
+    } catch (err) {
+        res.status(400).send(err.name)
+    }
+})
+
 //add a star to a drink
 //TODO log to user and add a way to remove the star
 router.put("/id/star", async (req, res) => {
@@ -120,7 +150,14 @@ router.post("/", async (req, res) => {
         (i) => i.name.toLowerCase())
     
     try {
-        //TODO !! create ingredient in db if it doesn't exist !!
+        //create ingredient in db if it doesn't exist
+        ingredient_names.forEach(async (ing) => {
+            await db.any(
+                `INSERT INTO ingredient (name) VALUES ($/ing/)
+                ON CONFLICT DO NOTHING;`, 
+                {ing}
+            )
+        })
 
         //find all ingredient IDs
         const ingredient_ids = await db.any(
