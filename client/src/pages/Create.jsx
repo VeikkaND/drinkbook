@@ -1,9 +1,9 @@
 import { useState } from "react"
 import drinkService from "../services/drink"
-import Highball from "../components/Highball"
+import ingredientService from "../services/ingredient"
 import { HexColorPicker } from "react-colorful"
-import Cocktail from "../components/Cocktail"
 import Glass from "../components/Glass"
+import { useEffect } from "react"
 
 function Create() {
     const [ingredientList, setIngredientList] = useState([
@@ -14,6 +14,19 @@ function Create() {
     const [name, setName] = useState(null)
     const [color, setColor] = useState("#aabbcc")
     const [glass, setGlass] = useState("highball")
+    const [ingredients, setIngredients] = useState([])
+    const [matchingIngredients, setMatchingIngredients] = useState([])
+    const [suggestionShowing, setSuggestionShowing] = useState(false)
+    const [suggestionIndex, setSuggestionIndex] = useState(0)
+
+    useEffect(() => {
+        const getIngredients = async () => {
+            const names = await ingredientService
+                .getAllIngredientNames()
+            setIngredients(names)
+        }
+        getIngredients()
+    }, [])
 
     const handleCreate = async (event) => {
         console.log("creating new drink")
@@ -29,6 +42,7 @@ function Create() {
             steps = steps.concat(`${i+1}. ` + text + "|") // use | as separator 
         }
         
+        //TODO forward user to new drink page
         const newId = await drinkService.createDrink(
             name, 
             ingredientList,
@@ -71,6 +85,25 @@ function Create() {
         const list = [...ingredientList]
         list[i][event.target.name] = event.target.value
         setIngredientList(list)
+
+        //vv suggestions vv
+        if(event.target.name === "name") {
+            //set index of field(row) to show suggestions for
+            setSuggestionIndex(i) 
+            const inputValue = event.target.value
+            //show suggestions only when input length > 1
+            if(inputValue.length > 1) { 
+                setSuggestionShowing(true)
+            } else {
+                setSuggestionShowing(false)
+            }
+            const matching = ingredients.filter((name) => {
+                return name.toLowerCase()
+                    .includes(inputValue.toLowerCase())
+            })
+            setMatchingIngredients(matching)
+        }
+        
     }
 
     const handleStepAdd = (event, i) => {
@@ -104,7 +137,13 @@ function Create() {
         setGlass(event.target.value)
     }
 
+    const handleClick = (event, ingredient) => {
+        ingredient.name = event.target.innerText
+        setSuggestionShowing(false)
+    }
+
     //TODO make fields mandatory etc.
+    //fix bugs with suggestions
     return(
         <div>
             <h2>Create page here</h2>
@@ -129,6 +168,12 @@ function Create() {
                                 value={ingredient.name}
                                 placeholder="vodka"
                                 onChange={(e) => handleChange(e, i)}/>
+                                {(suggestionShowing && suggestionIndex === i) &&
+                                <div className="input-suggestions">
+                                    {matchingIngredients.map((match, i) => 
+                                    <p key={i} onClick={(e) => handleClick(e, ingredient)}>{match}</p>)}
+                                </div>
+                                }
                                 <button onClick={(e) => 
                                     handleRemove(e, i)}>Remove</button>
                             </div>

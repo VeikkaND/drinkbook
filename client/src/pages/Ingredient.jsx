@@ -9,7 +9,6 @@ function Ingredient() {
     const params = useParams()
     const ingredientName = params.name
     useEffect(() => {
-        //TODO find all drinks with ingredient
         const getDrinks = async () => {
             const res = await drinkService
                 .getDrinksWithIngredient(ingredientName)
