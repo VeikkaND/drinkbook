@@ -34,7 +34,7 @@ const createDrink = async (
             color: color,
             glass: glass
         })
-        console.log(res.data)
+        return res.data
 }
 
 const starDrink = async (id) => {

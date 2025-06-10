@@ -111,7 +111,7 @@ router.get("/ingredient", async (req, res) => {
             WHERE ingredient_id = $/id/;`, 
             {id}
         )
-        
+
         const ids = drink_ids.map((_id) => _id = _id.drink_id)
         const drinks = await db.any(
             `SELECT * FROM drink 
@@ -174,7 +174,6 @@ router.post("/", async (req, res) => {
         )
         //insert all ingredients in drink to db (drink_ingredient)
         for(let i = 0; i < ingredient_ids.length; i++) {
-            console.log(ingredient_ids[i])
             await db.none(
                 `INSERT INTO drink_ingredient
                 (drink_id, ingredient_id, amount, unit)
@@ -187,7 +186,7 @@ router.post("/", async (req, res) => {
                 }
             )
         }
-        res.status(201).send("drink created")
+        res.status(201).send(data.drink_id)
     } catch(err) {
         res.status(400).send(err.name)
     }

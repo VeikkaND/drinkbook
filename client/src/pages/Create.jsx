@@ -4,6 +4,7 @@ import ingredientService from "../services/ingredient"
 import { HexColorPicker } from "react-colorful"
 import Glass from "../components/Glass"
 import { useEffect } from "react"
+import { useNavigate } from "react-router"
 
 function Create() {
     const [ingredientList, setIngredientList] = useState([
@@ -28,7 +29,10 @@ function Create() {
         getIngredients()
     }, [])
 
+    const navigate = useNavigate()
+
     const handleCreate = async (event) => {
+        event.preventDefault()
         console.log("creating new drink")
         // change strings in units to numbers
         ingredientList.forEach((ingredient) => {
@@ -42,7 +46,6 @@ function Create() {
             steps = steps.concat(`${i+1}. ` + text + "|") // use | as separator 
         }
         
-        //TODO forward user to new drink page
         const newId = await drinkService.createDrink(
             name, 
             ingredientList,
@@ -50,6 +53,8 @@ function Create() {
             color,
             glass
         )
+        //forward user to new drink page
+        navigate(`/drink/${name}/${newId}`)
     }
 
     const handleNameChange = async (event) => {
