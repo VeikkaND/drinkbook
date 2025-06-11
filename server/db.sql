@@ -25,7 +25,6 @@ CREATE TABLE drink_ingredient (
 CREATE TABLE users (
     user_id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_name varchar(255) NOT NULL UNIQUE,
-    password varchar(255) NOT NULL,
     email varchar(255) NOT NULL UNIQUE,
     created_drinks integer[],
     starred_drinks integer[]
