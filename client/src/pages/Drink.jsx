@@ -33,7 +33,7 @@ function Drink() {
         }
         getDrink()
         getOtherDrinks()
-    }, [])
+    }, [id])
 
     //TODO make stars only available to users & add removing stars
     const handleStar = async () => {
