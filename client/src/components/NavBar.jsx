@@ -2,14 +2,10 @@ import { NavLink, useNavigate } from "react-router"
 import { useGoogleLogin } from "@react-oauth/google"
 import { googleLogout } from "@react-oauth/google"
 import axios from "axios"
-import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { resetUser, setUser } from "../reducers/userReducer"
 
 function NavBar() {
-    const [loggedIn, setLoggedIn] = useState(false)
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const user_id = localStorage.getItem("user_id")
     
     const login = useGoogleLogin({
         flow: "auth-code",
@@ -18,29 +14,27 @@ function NavBar() {
                 params: {code: codeResponse.code}
             })
             console.log("tokens:", tokens.data)
-            //store user in redux store
-            dispatch(setUser(tokens.data.user[0]))
-            //store token in localstorage
+            //store token & user details in localstorage
             localStorage.setItem("token", tokens.data.token)
-            setLoggedIn(true)
+            localStorage.setItem("user_id", tokens.data.user[0].user_id)
+            localStorage.setItem("user_name", tokens.data.user[0].user_name)
+            localStorage.setItem("email", tokens.data.user[0].email)
+            window.location.reload()
         },
         onError: (error) => console.log(error)
     })
 
-    //TODO check if logged in, store in state/context
     return(
         <div className="navbar">
             <NavLink to="/">logo here</NavLink>
             <NavLink to="/drinks">Drinks</NavLink>
             <NavLink to="/create">Create</NavLink>
-            {loggedIn ?
+            {user_id ?
             <div>
                 <button onClick={() => {
                     googleLogout()
                     localStorage.clear()
-                    setLoggedIn(false)
                     navigate("/")
-                    dispatch(resetUser())
                     }}>sign out</button>
             </div> :
             <div>

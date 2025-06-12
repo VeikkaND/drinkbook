@@ -33,15 +33,15 @@ router.get("/", async (req, res) => {
     const {email, name} = await token_info_response.json()
 
     let user = await db.any( // check if account exists in db
-        `SELECT * FROM users WHERE user_name = $/email/`, {email}
+        `SELECT * FROM users WHERE email = $/email/`, {email}
     )
     if(!user[0]) { // create account if user not in db
         user = await db.one(
             `INSERT INTO users (user_name, email) 
-            VALUES ($/email/, $/name/) RETURNING *`, {email, name}
+            VALUES ($/name/, $/email/) RETURNING *`, {name, email}
         )
     }
-    const token = generateToken(name) // generate jwt for user
+    const token = generateToken(name, email) // generate jwt for user
     res.status(token_info_response.status).send({user, token})
 })
 

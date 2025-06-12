@@ -15,6 +15,10 @@ function Drink() {
     const name = params.name
     const id = params.id
     const token = localStorage.getItem("token")
+    const user_id = localStorage.getItem("user_id")
+    const user_name = localStorage.getItem("user_name")
+    const email = localStorage.getItem("email")
+
     useEffect(() => {
         const getDrink = async () => {
             const res = await drinkService.getDrinkById(name, id)
@@ -29,13 +33,22 @@ function Drink() {
         }
         getDrink()
         getOtherDrinks()
-    }, [drink])
+    }, [])
 
     //TODO make stars only available to users & add removing stars
     const handleStar = async () => {
+        const user = {
+            name: user_name,
+            email: email
+        }
         const res = await drinkService
-            .starDrink(drink.drink.drink_id, token)
-        setStars(stars+1)
+            .starDrink(drink.drink.drink_id, token, user)
+        if(res == "add") {
+            setStars(stars+1)
+        } else {
+            setStars(stars-1)
+        }
+        
     }
 
     //TODO add other recipes for the same drink and recommendations

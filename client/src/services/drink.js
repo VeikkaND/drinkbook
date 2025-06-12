@@ -44,10 +44,12 @@ const createDrink = async (
         return res.data
 }
 
-const starDrink = async (id, token) => {
+const starDrink = async (id, token, user) => {
     const res = await axios.put(`/api/drink/id/star`, {
-        drink_id: id
+        drink_id: id,
+        user: user
     }, {headers: {"Authorization": `Bearer ${token}`}})
+    return res.data
 }
 
 const getTop5 = async () => {

@@ -140,15 +140,49 @@ router.get("/ingredient", async (req, res) => {
 //TODO log to user and add a way to remove the star
 router.put("/id/star", async (req, res) => {
     const drink_id = req.body.drink_id
+    const user = req.body.user
     const token = req.decoded_token
-    try {
-        await db.none(
-            `UPDATE drink SET stars = stars + 1 
-            WHERE drink_id = '${drink_id}'`
-        )
-        res.status(200).send(drink_id)
-    } catch (err) {
-        res.status(400).send(err.name)
+    
+    //check if token matches with given email
+    if(user.email == token.email) { 
+        try {
+            //check if drink is starred by user
+            const starred = await db.oneOrNone(
+                `SELECT * FROM users WHERE email = $/email/
+                AND $/drink_id/ = ANY (starred_drinks);`, 
+                {
+                    email: user.email,
+                    drink_id: drink_id
+                }
+            )
+
+            if(!starred){
+                await db.none( // add star to drink & users starred
+                    `UPDATE drink SET stars = stars + 1 
+                    WHERE drink_id = $/drink_id/;
+                    UPDATE users SET starred_drinks = 
+                    array_append(starred_drinks, $/drink_id/)
+                    WHERE email = $/email/;`,
+                    {drink_id, email: user.email}
+                )
+                res.status(200).send("add")
+            } else {
+                await db.none( // remove star from drink & users starred
+                    `UPDATE drink SET stars = stars - 1 
+                    WHERE drink_id = $/drink_id/;
+                    UPDATE users SET starred_drinks = 
+                    array_remove(starred_drinks, $/drink_id/)
+                    WHERE email = $/email/;`,
+                    {drink_id, email: user.email}
+                )
+                res.status(200).send("remove")
+            }
+        
+        } catch (err) {
+            res.status(400).send(err.name)
+        }
+    } else {
+        res.status(401).send("Unauthorized")
     }
 })
 
