@@ -3,21 +3,25 @@ import { useGoogleLogin } from "@react-oauth/google"
 import { googleLogout } from "@react-oauth/google"
 import axios from "axios"
 import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { resetUser, setUser } from "../reducers/userReducer"
 
 function NavBar() {
     const [loggedIn, setLoggedIn] = useState(false)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     
     const login = useGoogleLogin({
         flow: "auth-code",
         onSuccess: async (codeResponse) => {
-            console.log("codeResponse: ", codeResponse)
             const tokens = await axios.get('/api/google/callback', {
                 params: {code: codeResponse.code}
             })
             console.log("tokens:", tokens.data)
+            //store user in redux store
+            dispatch(setUser(tokens.data.user[0]))
             //store token in localstorage
-            localStorage.setItem("token", tokens.token)
+            localStorage.setItem("token", tokens.data.token)
             setLoggedIn(true)
         },
         onError: (error) => console.log(error)
@@ -36,6 +40,7 @@ function NavBar() {
                     localStorage.clear()
                     setLoggedIn(false)
                     navigate("/")
+                    dispatch(resetUser())
                     }}>sign out</button>
             </div> :
             <div>

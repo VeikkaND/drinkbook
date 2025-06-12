@@ -140,6 +140,7 @@ router.get("/ingredient", async (req, res) => {
 //TODO log to user and add a way to remove the star
 router.put("/id/star", async (req, res) => {
     const drink_id = req.body.drink_id
+    const token = req.decoded_token
     try {
         await db.none(
             `UPDATE drink SET stars = stars + 1 

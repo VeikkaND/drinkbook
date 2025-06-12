@@ -14,6 +14,7 @@ function Drink() {
     const params = useParams()
     const name = params.name
     const id = params.id
+    const token = localStorage.getItem("token")
     useEffect(() => {
         const getDrink = async () => {
             const res = await drinkService.getDrinkById(name, id)
@@ -33,7 +34,7 @@ function Drink() {
     //TODO make stars only available to users & add removing stars
     const handleStar = async () => {
         const res = await drinkService
-            .starDrink(drink.drink.drink_id)
+            .starDrink(drink.drink.drink_id, token)
         setStars(stars+1)
     }
 
@@ -49,7 +50,8 @@ function Drink() {
                     color={drink.drink.color}/> 
                 : <p>loading image</p>}
                 
-                <button onClick={handleStar}>star</button>
+                {token && 
+                <button onClick={handleStar}>star</button>}
 
                 {drink ? <IngredientList drink={drink}/> 
                 : <p>loading ingredients</p>}
