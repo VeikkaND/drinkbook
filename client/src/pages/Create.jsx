@@ -19,6 +19,9 @@ function Create() {
     const [matchingIngredients, setMatchingIngredients] = useState([])
     const [suggestionShowing, setSuggestionShowing] = useState(false)
     const [suggestionIndex, setSuggestionIndex] = useState(0)
+    const token = localStorage.getItem("token")
+    const email = localStorage.getItem("email")
+    const user_name = localStorage.getItem("user_name")
 
     useEffect(() => {
         const getIngredients = async () => {
@@ -50,7 +53,9 @@ function Create() {
             ingredientList,
             steps,
             color,
-            glass
+            glass,
+            token,
+            {email: email, user_name: user_name}
         )
         //forward user to new drink page
         navigate(`/drink/${name}/${newId}`)

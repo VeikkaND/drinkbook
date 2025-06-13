@@ -137,7 +137,6 @@ router.get("/ingredient", async (req, res) => {
 })
 
 //add a star to a drink
-//TODO log to user and add a way to remove the star
 router.put("/id/star", async (req, res) => {
     const drink_id = req.body.drink_id
     const user = req.body.user
@@ -192,13 +191,18 @@ router.post("/", async (req, res) => {
     const steps = req.body.steps
     const color = req.body.color
     const glass = req.body.glass
+    const user = req.body.user
+    const token = req.decoded_token
     const ingredients = req.body.ingredients
     const ingredient_names = ingredients.map(
         (i) => i.name.toLowerCase())
     
     try {
+        if(user.email != token.email) {
+            res.status(401).send("Unauthorized")
+        }
         //create ingredient in db if it doesn't exist
-        ingredient_names.forEach(async (ing) => {
+        await ingredient_names.forEach(async (ing) => {
             await db.any(
                 `INSERT INTO ingredient (name) VALUES ($/ing/)
                 ON CONFLICT DO NOTHING;`, 
@@ -220,21 +224,35 @@ router.post("/", async (req, res) => {
             {name, steps, color, glass}
         )
         //insert all ingredients in drink to db (drink_ingredient)
-        for(let i = 0; i < ingredient_ids.length; i++) {
-            await db.none(
+        await Promise.all(
+            ingredients.map(async (ing, i) => {
+                await db.none(
                 `INSERT INTO drink_ingredient
                 (drink_id, ingredient_id, amount, unit)
                 VALUES ($/drink_id/, $/ingredient_id/,
                 $/amount/, $/unit/);`, 
-                {drink_id: data.drink_id, 
-                    ingredient_id: ingredient_ids[i].ingredient_id, 
-                    amount: ingredients[i].amount, 
-                    unit: ingredients[i].unit
-                }
-            )
-        }
+                    {
+                        drink_id: data.drink_id, 
+                        ingredient_id: ingredient_ids[i].ingredient_id, 
+                        amount: ingredients[i].amount, 
+                        unit: ingredients[i].unit
+                    }
+                )
+            })
+        )
+        
+        await db.none( // insert created drink id to users
+            `UPDATE users SET created_drinks = 
+            array_append(created_drinks, $/drink_id/)
+            WHERE email = $/email/;`, 
+            {
+                drink_id: data.drink_id, 
+                email: user.email, 
+            }
+        )
         res.status(201).send(data.drink_id)
     } catch(err) {
+        console.log(err)
         res.status(400).send(err.name)
     }
 })
