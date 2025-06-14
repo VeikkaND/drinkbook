@@ -16,9 +16,9 @@ function NavBar() {
             console.log("tokens:", tokens.data)
             //store token & user details in localstorage
             localStorage.setItem("token", tokens.data.token)
-            localStorage.setItem("user_id", tokens.data.user[0].user_id)
-            localStorage.setItem("user_name", tokens.data.user[0].user_name)
-            localStorage.setItem("email", tokens.data.user[0].email)
+            localStorage.setItem("user_id", tokens.data.user.user_id)
+            localStorage.setItem("user_name", tokens.data.user.user_name)
+            localStorage.setItem("email", tokens.data.user.email)
             window.location.reload()
         },
         onError: (error) => console.log(error)

@@ -40,9 +40,15 @@ router.get("/", async (req, res) => {
             `INSERT INTO users (user_name, email) 
             VALUES ($/name/, $/email/) RETURNING *`, {name, email}
         )
+        const token = generateToken(name, email)
+        res.status(token_info_response.status).send({user, token})
+    } else {
+        user = user[0] // turn array of 1 into object
+        const token = generateToken(name, email) // generate jwt for user
+        res.status(token_info_response.status).send({user, token})
     }
-    const token = generateToken(name, email) // generate jwt for user
-    res.status(token_info_response.status).send({user, token})
+    
+    
 })
 
 module.exports = router
