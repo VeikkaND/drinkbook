@@ -33,7 +33,6 @@ const getDrinkById = async (name, id) => {
 
 const createDrink = async (
     name, ingredients, steps, color, glass, token, user) => {
-        //TODO add user to drink details in db
         const res = await axios.post(`/api/drink/`, {
             name: name,
             ingredients: ingredients,

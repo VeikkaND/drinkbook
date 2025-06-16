@@ -35,7 +35,6 @@ function Drink() {
         getOtherDrinks()
     }, [id])
 
-    //TODO make stars only available to users & add removing stars
     const handleStar = async () => {
         const user = {
             name: user_name,
