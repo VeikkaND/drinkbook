@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import drinkService from "../services/drink"
-import { useParams } from "react-router"
+import { Link, useParams } from "react-router"
 import { IngredientList } from "../components/IngredientList"
 import Glass from "../components/Glass"
 import Steps from "../components/Steps"
@@ -53,6 +53,7 @@ function Drink() {
     //TODO add other recipes for the same drink and recommendations
     return(
         <div>
+            <Link to={"/drinks"}>Back</Link>
             <div>
                 <h3>{name}</h3>
 
@@ -71,21 +72,19 @@ function Drink() {
                 {drink ? <Steps text={drink.drink.steps}/> 
                 : <p>loading steps</p>}
             </div>
+            {other.length > 0 && 
             <div>
                 <h4>other recipes</h4>
                 {other &&
                 <div className="drinks">
                     {other.map((d, i) => 
-                        <DrinkLink drink={d} key={i} other={true}/>
+                        <DrinkLink drink={d} key={i} 
+                        other={true}/>
                     )}
                 </div>
                 }
-                <p>other recipes for the same drink here</p>
             </div>
-            <div>
-                <h4>recommendations</h4>
-                <p>other drinks here</p>
-            </div>
+            }
         </div>
     )
 }

@@ -29,6 +29,9 @@ function NavBar() {
             <NavLink to="/">logo here</NavLink>
             <NavLink to="/drinks">Drinks</NavLink>
             <NavLink to="/create">Create</NavLink>
+            {user_id && 
+            <NavLink to={`/profile/${user_id}`}>Profile</NavLink>}
+            
             {user_id ?
             <div>
                 <button onClick={() => {

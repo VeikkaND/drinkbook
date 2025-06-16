@@ -11,6 +11,7 @@ import Drink from './pages/Drink.jsx'
 import FindDrink from './pages/FindDrink.jsx'
 import Ingredient from './pages/Ingredient.jsx'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import Profile from './pages/Profile.jsx'
 
 createRoot(document.getElementById('root')).render(
   <GoogleOAuthProvider clientId='293628245001-eeej0q3nlae34si39n8n8cdd4egf7sg8.apps.googleusercontent.com'>
@@ -24,6 +25,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/drink/:name/:id' element={<Drink />}/>
         <Route path='/ingredient/:name' element={<Ingredient />}/>
         <Route path='/find' element={<FindDrink />}/>
+        <Route path='/profile/:id' element={<Profile />}/>
       </Routes>
       <Footer />
     </BrowserRouter>
