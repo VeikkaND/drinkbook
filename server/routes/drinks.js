@@ -198,24 +198,28 @@ router.post("/", async (req, res) => {
         (i) => i.name.toLowerCase())
     
     try {
-        if(user.email != token.email) {
+        if(user.email != token.email) { // return 401 if no token
             res.status(401).send("Unauthorized")
         }
+
         //create ingredient in db if it doesn't exist
-        await ingredient_names.forEach(async (ing) => {
-            await db.any(
-                `INSERT INTO ingredient (name) VALUES ($/ing/)
-                ON CONFLICT DO NOTHING;`, 
-                {ing}
-            )
-        })
+        await Promise.all(
+            await ingredient_names.map(async (ing) => {
+                await db.any(
+                    `INSERT INTO ingredient (name) VALUES ($/ing/)
+                    ON CONFLICT DO NOTHING;`, 
+                    {ing}
+                )
+            })
+        )
 
         //find all ingredient IDs
-        const ingredient_ids = await db.any(
-            `SELECT (ingredient_id) FROM ingredient 
+        const ingredient_ids = await db.many(
+            `SELECT ingredient_id, name FROM ingredient 
             WHERE ingredient.name IN ($/ingredient_names:csv/);`, 
             {ingredient_names}
         )
+        
         //insert new drink into db
         const data = await db.one(
             `INSERT INTO drink (name, steps, color, glass) 
@@ -223,9 +227,12 @@ router.post("/", async (req, res) => {
             RETURNING drink_id;`, 
             {name, steps, color, glass}
         )
+
         //insert all ingredients in drink to db (drink_ingredient)
         await Promise.all(
             ingredients.map(async (ing, i) => {
+                const ingredient = ingredient_ids
+                    .find((ingr) => ingr.name == ing.name)
                 await db.none(
                 `INSERT INTO drink_ingredient
                 (drink_id, ingredient_id, amount, unit)
@@ -233,7 +240,7 @@ router.post("/", async (req, res) => {
                 $/amount/, $/unit/);`, 
                     {
                         drink_id: data.drink_id, 
-                        ingredient_id: ingredient_ids[i].ingredient_id, 
+                        ingredient_id: ingredient.ingredient_id, 
                         amount: ingredients[i].amount, 
                         unit: ingredients[i].unit
                     }
@@ -252,7 +259,6 @@ router.post("/", async (req, res) => {
         )
         res.status(201).send(data.drink_id)
     } catch(err) {
-        console.log(err)
         res.status(400).send(err.name)
     }
 })

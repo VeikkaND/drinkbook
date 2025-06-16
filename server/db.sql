@@ -15,11 +15,12 @@ CREATE TABLE ingredient (
 );
 
 CREATE TABLE drink_ingredient (
+	drink_ingredient_id integer GENERATED ALWAYS AS IDENTITY,
     drink_id integer REFERENCES drink ON DELETE CASCADE,
     ingredient_id integer REFERENCES ingredient ON DELETE CASCADE,
     amount real NOT NULL,
     unit VARCHAR(255),
-    PRIMARY KEY (drink_id, ingredient_id)
+    PRIMARY KEY (drink_ingredient_id, drink_id, ingredient_id)
 );
 
 CREATE TABLE users (
@@ -36,7 +37,7 @@ VALUES ('drink1', 'red', 'highball'), ('drink2', 'red', 'cocktail');
 INSERT INTO ingredient (name) VALUES 
 ('vodka'), ('juice'), ('lime');
 
-INSERT INTO drink_ingredient VALUES 
+INSERT INTO drink_ingredient (drink_id, ingredient_id, amount, unit) VALUES 
 (1, 1, 3, 'cl'), 
 (1, 2, 6, 'cl'),
 (2, 1, 3, 'cl'),
