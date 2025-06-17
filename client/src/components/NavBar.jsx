@@ -1,11 +1,14 @@
-import { NavLink, useNavigate } from "react-router"
+import { Link, NavLink, useNavigate } from "react-router"
 import { useGoogleLogin } from "@react-oauth/google"
 import { googleLogout } from "@react-oauth/google"
 import axios from "axios"
+import { useState } from "react"
 
 function NavBar() {
+    const [profileMenu, setProfileMenu] = useState(false)
     const navigate = useNavigate()
     const user_id = localStorage.getItem("user_id")
+    const username = localStorage.getItem("user_name")
     
     const login = useGoogleLogin({
         flow: "auth-code",
@@ -24,24 +27,42 @@ function NavBar() {
         onError: (error) => console.log(error)
     })
 
-    return(
-        <div className="navbar">
-            <NavLink to="/">logo here</NavLink>
-            <NavLink to="/drinks">Drinks</NavLink>
-            <NavLink to="/create">Create</NavLink>
-            {user_id && 
-            <NavLink to={`/profile/${user_id}`}>Profile</NavLink>}
-            
-            {user_id ?
-            <div>
-                <button onClick={() => {
+    const SignoutButton = () => {
+        return(
+            <button onClick={() => {
                     googleLogout()
                     localStorage.clear()
                     navigate("/")
-                    }}>sign out</button>
+                    }}>
+                        sign out</button>
+        )
+    }
+
+    return(
+        <div className="navbar">
+            <NavLink to="/">Drinkbook</NavLink>
+            <NavLink to="/drinks">Drinks</NavLink>
+            <NavLink to="/create">Create</NavLink>
+            
+            {user_id ?
+            <div className="profile-container">
+                <button onClick={() => {
+                    setProfileMenu(!profileMenu)
+                }}>Logged in as {username}</button>
+                <div className="profile-menu" style={{
+                    display: profileMenu ? "flex" : "none"
+                }}>
+                    <Link to={`/profile/${user_id}`} 
+                        onClick={() => setProfileMenu(false)}>
+                        Profile
+                    </Link>
+                    <SignoutButton />
+                </div>
             </div> :
             <div>
-                <button onClick={login}>sign in (google)</button>
+                <button onClick={login} id="sign-in">
+                    <img src="web_light_sq_SI.svg"></img>
+                </button>
             </div> 
             }
             

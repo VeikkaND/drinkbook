@@ -9,6 +9,33 @@
     background-color: gainsboro;
 }
 
+#sign-in {
+    cursor: pointer;
+    padding: 0;
+    border: 0;
+}
+
+.profile-container {
+    position: relative;
+}
+
+.profile-menu {
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    gap: 10px;
+    background-color: gainsboro;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px;
+    border-inline: solid 1px;
+}
+
+a {
+    width: fit-content;
+}
+
 .drinks{
     display: flex;
     flex-wrap: wrap;
