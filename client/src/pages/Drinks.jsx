@@ -11,6 +11,7 @@ function Drinks() {
         const getDrinks = async () => {
             const res = await drinkService.getAllDrinks()
             setDrinks(res)
+            setSorting("stars")
             sortDrinks()
         }
         getDrinks()
@@ -49,22 +50,27 @@ function Drinks() {
     }
 
     return(
-        <div>
-            <h2>Drinks page</h2>
-            <SearchInput />
-            <label>
-                sort by:
-                <select onChange={handleChange}>
-                    <option value={"stars"}>
-                        Stars</option>
-                    <option value={"alphabetical"}>
-                        Alphabetical</option>
-                </select>
-            </label>
-            
-            <div className="drinks">
-                {sortDrinks()}
+        <div className="content">
+            <div className="main">
+                <SearchInput />
             </div>
+            <div className="secondary">
+                <h2>Browse all drinks</h2>
+                <label>
+                    sort by: &nbsp;
+                    <select onChange={handleChange}>
+                        <option value={"stars"}>
+                            stars</option>
+                        <option value={"alphabetical"}>
+                            alphabetical</option>
+                    </select>
+                </label>
+                
+                <div className="drinks">
+                    {sortDrinks()}
+                </div>
+            </div>
+            
             
         </div>
     )

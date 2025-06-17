@@ -20,11 +20,11 @@ function App() {
       <div className="main">
         <h1>Drinkbook</h1>
         <SearchInput />
-        <p>or</p>
+        <p id="or">or</p>
         <NavLink to="/create">Create your own</NavLink>
         <p id="note">(requires an account)</p>
       </div>
-      <div className="popular">
+      <div className="secondary">
         <h2>Popular Drinks</h2>
         <div className="drinks">
           {top5 && top5.map((drink, i) => 
