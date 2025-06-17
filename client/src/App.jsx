@@ -16,15 +16,16 @@ function App() {
   }, [])
 
   return (
-    <div>
-      <div>
+    <div className="content">
+      <div className="main">
+        <h1>Drinkbook</h1>
         <SearchInput />
         <p>or</p>
         <NavLink to="/create">Create your own</NavLink>
-        <p>requires an account</p>
+        <p id="note">(requires an account)</p>
       </div>
-      <div>
-        <h3>Popular Drinks</h3>
+      <div className="popular">
+        <h2>Popular Drinks</h2>
         <div className="drinks">
           {top5 && top5.map((drink, i) => 
             <DrinkLink drink={drink} key={i}/>

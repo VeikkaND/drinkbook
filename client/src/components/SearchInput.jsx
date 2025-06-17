@@ -48,7 +48,7 @@ function SearchInput() {
     return(
         <div className="search-input">
             <form onSubmit={handleSearch}>
-                <h3>Search for a drink</h3>
+                <h3>Search for a drink:</h3>
                 <input placeholder="vodka martini" 
                     name="input" autoComplete="off" 
                     onChange={handleChange} 

@@ -1,3 +1,11 @@
+body {
+    font-family: "Montserrat";
+}
+
+a {
+    width: fit-content;
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -8,6 +16,14 @@
     height: 300px;
     background-color: gainsboro;
 }
+
+#note {
+    color: gray;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+/* --- SIGN IN ---*/
 
 #sign-in {
     cursor: pointer;
@@ -32,8 +48,29 @@
     border-inline: solid 1px;
 }
 
-a {
-    width: fit-content;
+/* --- --- */ 
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+}
+
+.content h1 {
+    font-size: 40px;
+}
+
+.content .main h1 {
+    margin-bottom: 50px;
+}
+
+.search-input input {
+    text-align: center;
+    font-size: 25px;
+    width: 300px;
+    height: 30px;
 }
 
 .drinks{
