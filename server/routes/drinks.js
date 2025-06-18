@@ -232,7 +232,7 @@ router.post("/", async (req, res) => {
         await Promise.all(
             ingredients.map(async (ing, i) => {
                 const ingredient = ingredient_ids
-                    .find((ingr) => ingr.name == ing.name)
+                    .find((ingr) => ingr.name == ing.name.toLowerCase())
                 await db.none(
                 `INSERT INTO drink_ingredient
                 (drink_id, ingredient_id, amount, unit)
@@ -259,6 +259,7 @@ router.post("/", async (req, res) => {
         )
         res.status(201).send(data.drink_id)
     } catch(err) {
+        console.log(err)
         res.status(400).send(err.name)
     }
 })
