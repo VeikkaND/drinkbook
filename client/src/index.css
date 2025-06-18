@@ -108,21 +108,27 @@ a {
     height: 30px;
 }
 
-.search-input .input-suggestions {
+/* --- input suggestions --- */
+
+.input-suggestions {
     background-color: white;
     position: absolute;
     display: grid;
-    width: 100%;
+    width: 99%;
     text-align: left;
+    z-index: 2;
+    border-inline: solid 1px gray;
+    border-bottom: solid 1px gray;
 }
 
-.search-input .input-suggestions p {
-    width: 97%;
+.input-suggestions p {
     padding: 5px;
     margin: 0;
+    padding-right: 0;
+    font-size: 14px;
 }
 
-.search-input .input-suggestions p:hover {
+.input-suggestions p:hover {
     cursor: pointer;
     background-color: gainsboro;
 }
@@ -254,4 +260,141 @@ a {
 
 .others {
 
+}
+
+/* --- Create page --- */
+
+.create-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create-main form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create-container {
+    display: flex;
+    gap: 50px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+
+.create-main h1 {
+    font-weight: 400;
+    padding-inline: 20px;
+    border-bottom: solid 1px gray;
+    margin-bottom: 30px;
+}
+
+.create-main h2 {
+    font-weight: 400;
+    font-size: 25px;
+    padding-bottom: 5px;
+    border-bottom: solid 1px gray;
+}
+
+.create-main h3 {
+    font-weight: 300;
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+
+.create-main #drink-name-input {
+    font-size: 20px;
+    display: flex;
+    justify-self: center;
+}
+
+/* - row 1 - */
+
+.create-row1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.create-row1 .glass {
+    width: fit-content;
+}
+
+.create-row1 .glass-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+/* - row 2 - */
+
+.create-row2 {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    width: 420px;
+}
+
+.create-row2 .ingredient-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.create-row2 .ingredient-row-inputs {
+    display: flex;
+    gap: 5px;
+}
+
+.create-row2 #amount-input {
+    width: 50px;
+}
+
+.create-row2 #unit-input {
+    width: 50px;
+}
+
+.create-row2 .name-input-container {
+    position: relative;
+}
+
+.create-row2 .step-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.create-row2 .step-row-input {
+    width: 280px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.create-row2 .step-row-input p {
+    margin: 0;
+    align-self: center;
+}
+
+.create-row2 .step-row-input textarea {
+    width: 250px;
+}
+
+.create-row2 .step-row button {
+    align-self: center;
+}
+
+.create-row2 #add-step {
+    margin-left: 25px;
+}
+
+.create-main #create-button {
+    padding-block: 15px;
+    padding-inline: 40px;
+    align-self: center;
+    font-size: 18px;
 }

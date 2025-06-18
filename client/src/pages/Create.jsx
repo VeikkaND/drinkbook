@@ -34,9 +34,11 @@ function Create() {
 
     const navigate = useNavigate()
 
+    //create drink event
     const handleCreate = async (event) => {
         event.preventDefault()
-        // change strings in units to numbers
+        //change strings in units to numbers
+        //maybe unnecessary???
         ingredientList.forEach((ingredient) => {
             ingredient.amount = Number(ingredient.amount)
         })
@@ -66,17 +68,20 @@ function Create() {
         setName(event.target.value)
     }
 
+    //add ingredient event
     const handleAdd = (event) => {
         event.preventDefault()
+        setSuggestionShowing(false)
         if(ingredientList.length < 20) { // limit ingredients to 20
             setIngredientList([...ingredientList, 
                 {amount: "", unit: "", name: ""}])
         } 
     }
 
-    // remove specified index
+    // remove ingredient event
     const handleRemove = (event, i) => {
         event.preventDefault()
+        setSuggestionShowing(false)
         if(ingredientList.length > 1) { // only remove if > 1 left
             const newList = [...ingredientList]
             newList.splice(i, 1) 
@@ -84,18 +89,14 @@ function Create() {
         }
     }
 
+    //change ingredient event
     const handleChange = (event, i) => {
-        //check if amount is a number
-        if(event.target.name === "amount" && !Number(event.target.value)) {
-            console.log("must be a number")
-            //TODO inform user
-            return
-        }
+        //update state with changed values
         const list = [...ingredientList]
         list[i][event.target.name] = event.target.value
         setIngredientList(list)
 
-        //vv suggestions vv
+        //set suggestions
         if(event.target.name === "name") {
             //set index of field(row) to show suggestions for
             setSuggestionIndex(i) 
@@ -115,6 +116,7 @@ function Create() {
         
     }
 
+    //add step event
     const handleStepAdd = (event, i) => {
         event.preventDefault()
         if(stepList.length < 20) { // limit steps to 20
@@ -122,6 +124,7 @@ function Create() {
         }
     }
 
+    //remove step event
     const handleStepRemove = (event, i) => {
         event.preventDefault()
         if(stepList.length > 1) {// only remove if > 1 left
@@ -131,20 +134,24 @@ function Create() {
         }
     }
 
+    //change step event
     const handleStepChange = (event, i) => {
         const list = [...stepList]
         list[i][event.target.name] = event.target.value
         setStepList(list)
     }
     
+    //change color event
     const changeColor = (color) => {
         setColor(color)
     }
 
+    //change glass event
     const changeGlass = (event) => {
         setGlass(event.target.value)
     }
 
+    //suggestions click event
     const handleClick = (event, ingredient) => {
         ingredient.name = event.target.innerText
         setSuggestionShowing(false)
@@ -153,73 +160,102 @@ function Create() {
     //TODO make fields mandatory etc.
     //fix bugs with suggestions
     return(
-        <div>
-            <h2>Create page here</h2>
+        <div className="create-main">
+            <h1>Create a Drink</h1>
             <form onSubmit={handleCreate}>
+                <h3>Name:</h3>
                 <input name="name" 
                 placeholder="Old Fashioned"
-                onChange={handleNameChange}></input>
-                <div>
-                    <p>Amount unit name</p>
-                    {ingredientList.map((ingredient, i) => {
-                        return(
-                            <div key={i}>
-                                <input name="amount" 
-                                value={ingredient.amount}
-                                placeholder="1" 
-                                onChange={(e) => handleChange(e, i)}/>
-                                <input name="unit" 
-                                value={ingredient.unit}
-                                placeholder="cl"
-                                onChange={(e) => handleChange(e, i)}/>
-                                <input name="name" 
-                                value={ingredient.name}
-                                placeholder="vodka"
-                                onChange={(e) => handleChange(e, i)}/>
-                                {(suggestionShowing && suggestionIndex === i) &&
-                                <div className="input-suggestions">
-                                    {matchingIngredients.map((match, i) => 
-                                    <p key={i} onClick={(e) => handleClick(e, ingredient)}>{match}</p>)}
-                                </div>
-                                }
-                                <button onClick={(e) => 
-                                    handleRemove(e, i)}>Remove</button>
+                onChange={handleNameChange}
+                id="drink-name-input"></input>
+                <div className="create-container">
+                    <div className="create-row1">
+                        <div className="glass">
+                            <Glass glass={glass} color={color}/>
+                        </div>
+                        <div className="glass-options">
+                            <select name="glass" onChange={changeGlass}>
+                                <option value="highball">Highball</option>
+                                <option value="cocktail">Cocktail</option>
+                                <option value="lowball">Lowball</option>
+                                <option value="champagne">Champagne</option>
+                            </select>
+                            <HexColorPicker color={color} 
+                            onChange={changeColor}/>
+                        </div>
+                    </div>
+                    <div className="create-row2">
+                        <div className="create-ingredients">
+                            <h3>Ingredients</h3>
+                            <p id="note">(Amount, unit, name)</p>
+                            {ingredientList.map((ingredient, i) => {
+                                return(
+                                    <div key={i} className="ingredient-row">
+                                        <div className="ingredient-row-inputs">
+                                            <input name="amount" 
+                                            value={ingredient.amount}
+                                            placeholder="1" 
+                                            onChange={(e) => handleChange(e, i)}
+                                            id="amount-input"
+                                            type="number"
+                                            autoComplete="off"/>
+                                            <input name="unit" 
+                                            value={ingredient.unit}
+                                            placeholder="cl"
+                                            onChange={(e) => handleChange(e, i)}
+                                            id="unit-input"
+                                            autoComplete="off"/>
+                                            <div className="name-input-container">
+                                                <input name="name" 
+                                                value={ingredient.name}
+                                                placeholder="vodka"
+                                                onChange={(e) => handleChange(e, i)}
+                                                id="name-input"
+                                                autoComplete="off"/>
+                                                {(suggestionShowing && suggestionIndex === i) &&
+                                                <div className="input-suggestions">
+                                                    {matchingIngredients.map((match, i) => 
+                                                    <p key={i} onClick={(e) => handleClick(e, ingredient)}>{match}</p>)}
+                                                </div>}
+                                            </div>
+                                        </div>
+                                        <button onClick={(e) => 
+                                            handleRemove(e, i)}>Remove Row</button>
+                                    </div>
+                                )          
+                            })}
+                            <div>
+                                <button onClick={handleAdd}>Add Row</button>
                             </div>
-                        )          
-                    })}
-                    <div>
-                        <button onClick={handleAdd}>Add</button>
+                        </div>
+                        <div className="create-steps">
+                            <h3>Steps</h3>
+                            {stepList.map((step, i) => {
+                                return(
+                                    <div key={i} className="step-row">
+                                        <div className="step-row-input">
+                                            <p>{i+1 + "."}</p>
+                                            <textarea name="text"
+                                            value={step.text}
+                                            placeholder="do something"
+                                            onChange={(e) => handleStepChange(e, i) }
+                                            rows={3}/>
+                                        </div>
+                                        <button onClick={(e) => 
+                                            handleStepRemove(e, i)}>Remove Step</button>
+                                    </div>
+                                )
+                            })}
+                            <button onClick={handleStepAdd}
+                            id="add-step">
+                                Add Step
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <h3>Guide</h3>
-                    {stepList.map((step, i) => {
-                        return(
-                            <div key={i}>
-                                {i+1 + "."}
-                                <textarea name="text"
-                                value={step.text}
-                                placeholder="do something"
-                                onChange={(e) => handleStepChange(e, i) }/>
-                                <button onClick={(e) => 
-                                    handleStepRemove(e, i)}>Remove</button>
-                            </div>
-                        )
-                    })}
-                    <button onClick={handleStepAdd}>Add</button>
-                </div>
-                <div>
-                    <select name="glass" onChange={changeGlass}>
-                        <option value="highball">Highball</option>
-                        <option value="cocktail">Cocktail</option>
-                        <option value="lowball">Lowball</option>
-                        <option value="champagne">Champagne</option>
-                    </select>
-                    <Glass glass={glass} color={color}/>
-                    <HexColorPicker color={color} 
-                    onChange={changeColor}/>
-                </div>
-                <button type="submit">Create</button>
+                <button type="submit" id="create-button">
+                    Create
+                </button>
             </form>
         </div>
     )
