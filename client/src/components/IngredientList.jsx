@@ -8,12 +8,18 @@ export const IngredientList = ({drink}) => {
     }
 
     return(
-        <div>
+        <div className="ingredients">
             {drink.ingredients.map((ingredient, i) => 
-            <li key={i} onClick={() => 
+            <li key={i} >
+                <p id="ingredient-name" onClick={() => 
                 handleClick(ingredient.name)}>
-                    {ingredient.amount}{" "}{ingredient.unit}
-            &nbsp; {ingredient.name}</li>)}
+                    {ingredient.name}
+                </p>  
+                <p id="ingredient-amount">
+                {ingredient.amount}{" "}{ingredient.unit}
+                </p>
+                     
+            </li>)}
         </div>
     )
 }

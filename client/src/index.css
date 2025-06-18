@@ -160,3 +160,98 @@ a {
 .drinklink-container {
     text-align: center;
 }
+
+/* --- Drink page --- */
+.drink {
+
+}
+
+.drink h1 {
+    text-align: center;
+    font-weight: 400;
+}
+
+.drink h2 {
+    font-weight: 400;
+    font-size: 25px;
+    padding-bottom: 5px;
+    border-bottom: solid 1px gray;
+}
+
+.drink h3 {
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+
+.drink-main {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    flex-wrap: wrap;
+}
+
+.drink-row1 {
+    align-self: center;
+}
+
+.drink-row2 {
+    min-width: 300px;
+}
+
+.drink .stars {
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+}
+
+.drink .stars p {
+    margin: auto;
+    margin-inline: 0;
+    width: fit-content;
+}
+
+.drink .stars button {
+    height: fit-content;
+    align-self: center;
+}
+
+.ingredients {
+    background-color: #eeeeee;
+    max-width: fit-content;
+    padding: 10px;
+}
+
+.ingredients li {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.ingredients li p{
+    margin: auto;
+    margin-bottom: 2px;
+}
+
+.ingredients li #ingredient-amount {
+    margin-right: 0;
+    margin-left: 0;
+    min-width: 50px;
+}
+
+.ingredients li #ingredient-name {
+    margin-left: 0;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+.steps {
+    background-color: #eeeeee;
+    max-width: 300px;
+    padding-inline: 10px;
+    padding-block: 5px;
+}
+
+.others {
+
+}

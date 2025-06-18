@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import drinkService from "../services/drink"
-import { Link, useParams } from "react-router"
+import { useParams } from "react-router"
 import { IngredientList } from "../components/IngredientList"
 import Glass from "../components/Glass"
 import Steps from "../components/Steps"
@@ -50,30 +50,34 @@ function Drink() {
         
     }
 
-    //TODO add other recipes for the same drink and recommendations
     return(
-        <div>
-            <Link to={"/drinks"}>Back</Link>
-            <div>
-                <h3>{name}</h3>
+        <div className="drink">
+            <h1>{name}</h1>
+            <div className="drink-main">
+                <div className="drink-row1">
+                    {drink ? <Glass glass={drink.drink.glass} 
+                        color={drink.drink.color}/> 
+                    : <p>loading image</p>}
+                </div>
+                <div className="drink-row2">
+                    <h2>{name}</h2>
+                    <div className="stars">
+                        <p>{stars} stars</p>
+                        {token && 
+                        <button onClick={handleStar}>star</button>}
+                    </div>
+                    
+                    <h3>Ingredients</h3>
+                    {drink ? <IngredientList drink={drink}/> 
+                    : <p>loading ingredients</p>}
 
-                <p>{stars} stars</p>
-
-                {drink ? <Glass glass={drink.drink.glass} 
-                    color={drink.drink.color}/> 
-                : <p>loading image</p>}
-                
-                {token && 
-                <button onClick={handleStar}>star</button>}
-
-                {drink ? <IngredientList drink={drink}/> 
-                : <p>loading ingredients</p>}
-
-                {drink ? <Steps text={drink.drink.steps}/> 
-                : <p>loading steps</p>}
+                    <h3>Steps</h3>
+                    {drink ? <Steps text={drink.drink.steps}/> 
+                    : <p>loading steps</p>}
+                </div>
             </div>
             {other.length > 0 && 
-            <div>
+            <div className="others">
                 <h4>other recipes</h4>
                 {other &&
                 <div className="drinks">
