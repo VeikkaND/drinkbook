@@ -1,15 +1,14 @@
 body {
     font-family: "Montserrat";
+    margin: 0;
 }
 
 a {
     width: fit-content;
 }
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: solid 1px;
+button {
+    font-family: "Montserrat";
 }
 
 .footer {
@@ -23,7 +22,37 @@ a {
     margin-top: 2px;
 }
 
-/* --- SIGN IN ---*/
+/* --- navbar ---*/
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid 1px;
+    padding-block: 15px;
+    padding-bottom: 15px;
+    padding-inline: 10px;
+}
+
+.navbar #main {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    font-weight: 300;
+    padding-inline: 10px;
+    padding-bottom: 5px;
+    background-image: linear-gradient(#000 0 0);
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    transition:
+        background-size 0.25s,
+        background-position 0s 0.25s;
+}
+
+.navbar #main:hover {
+    background-position: 100% 100%;
+    background-size: 100% 1px;
+}
 
 #sign-in {
     cursor: pointer;
@@ -39,13 +68,107 @@ a {
     flex-direction: column;
     align-items: center;
     position: absolute;
-    width: 100%;
+    width: 99%;
     gap: 10px;
-    background-color: gainsboro;
-    padding-top: 20px;
+    background-color: white;
+    padding-top: 10px;
     padding-bottom: 10px;
-    border-bottom: solid 1px;
-    border-inline: solid 1px;
+    text-align: center;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.profile-menu#opened {
+    border-inline: solid 1px black;
+    border-bottom: solid 1px black;
+    width: 98.5%;
+}
+
+.profile-menu a {
+    width: 80%;
+    padding-block: 5px;
+    text-decoration: none;
+    color: black;
+    background-color: #FFDECD;
+    border: solid 1px gray;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.profile-menu a:hover {
+    text-decoration: underline;
+}
+
+.profile-menu a img {
+    width: 25px;
+}
+
+#logged-in-button {
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    min-width: 130px;
+    padding: 5px;
+    padding-top: 1px;
+    padding-inline: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#logged-in-button.opened {
+    border-inline: solid 1px black;
+    padding-inline: 9px;
+    padding-top: 0px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top: solid 1px black;
+}
+
+#logged-in-button p {
+    margin: 0;
+    font-family: "Montserrat";
+    font-size: 15px;
+    font-weight: 300;
+}
+
+#logged-in-button img {
+    width: 25px;
+}
+
+#logged-in-button #normal {
+    rotate: 0deg;
+    transition-duration: 0.3s;
+}
+
+#logged-in-button #opened {
+    rotate: 90deg;
+    transition-duration: 0.3s;
+}
+
+#sign-out-button {
+    cursor: pointer;
+    width: 80%;
+    padding-block: 5px;
+    background-color: #FFDECD;
+    border: solid 1px gray;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+#sign-out-button:hover {
+    text-decoration: underline;
+}
+
+#sign-out-button img {
+    width: 25px;
 }
 
 /* --- content --- */ 
@@ -66,9 +189,9 @@ a {
     min-height: 200px;
     padding-top: 50px;
     padding-bottom: 80px;
-    background: #FFEBCD;
     background: linear-gradient(80deg, rgba(255, 235, 205, 1) 0%, rgba(255, 222, 205, 1) 100%);
 }
+
 
 .content h1 {
     font-size: 40px;

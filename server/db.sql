@@ -27,8 +27,8 @@ CREATE TABLE users (
     user_id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_name varchar(255) NOT NULL UNIQUE,
     email varchar(255) NOT NULL UNIQUE,
-    created_drinks integer[],
-    starred_drinks integer[]
+    created_drinks integer[] DEFAULT array[]::integer[],
+    starred_drinks integer[] DEFAULT array[]::integer[]
 );
 
 INSERT INTO drink (name, color, glass) 

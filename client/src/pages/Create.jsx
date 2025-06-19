@@ -220,12 +220,12 @@ function Create() {
                                             </div>
                                         </div>
                                         <button onClick={(e) => 
-                                            handleRemove(e, i)}>Remove Row</button>
+                                            handleRemove(e, i)}>Remove</button>
                                     </div>
                                 )          
                             })}
                             <div>
-                                <button onClick={handleAdd}>Add Row</button>
+                                <button onClick={handleAdd}>Add Ingredient</button>
                             </div>
                         </div>
                         <div className="create-steps">

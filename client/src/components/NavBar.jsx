@@ -33,28 +33,45 @@ function NavBar() {
                     googleLogout()
                     localStorage.clear()
                     navigate("/")
-                    }}>
-                        sign out</button>
+                    }}
+                    id="sign-out-button">
+                        Log out
+                        <img src={"sign-out.svg"}></img>
+                    </button>
         )
+    }
+
+    const closeProfile = () => {
+        setProfileMenu(false)
     }
 
     return(
         <div className="navbar">
-            <NavLink to="/">Drinkbook</NavLink>
-            <NavLink to="/drinks">Drinks</NavLink>
-            <NavLink to="/create">Create</NavLink>
+            <NavLink to="/" id="main" 
+            onClick={closeProfile}>Home</NavLink>
+            <NavLink to="/drinks" id="main" 
+            onClick={closeProfile}>Drinks</NavLink>
+            <NavLink to="/create" id="main" 
+            onClick={closeProfile}>Create</NavLink>
             
             {user_id ?
             <div className="profile-container">
                 <button onClick={() => {
                     setProfileMenu(!profileMenu)
-                }}>Logged in as {username}</button>
+                }}
+                id="logged-in-button"
+                className={profileMenu ? "opened" : "normal"}>
+                    <p>{username}</p>
+                    <img src={"bars.svg"} 
+                    id={profileMenu ? "opened" : "normal"}></img>
+                </button>
                 <div className="profile-menu" style={{
                     display: profileMenu ? "flex" : "none"
-                }}>
+                }} id={profileMenu ? "opened" : "normal"}>
                     <Link to={`/profile/${user_id}`} 
                         onClick={() => setProfileMenu(false)}>
                         Profile
+                        <img src={"profile.svg"}></img>
                     </Link>
                     <SignoutButton />
                 </div>
