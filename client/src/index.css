@@ -291,6 +291,7 @@ button {
 }
 
 /* --- Drink page --- */
+
 .drink {
 
 }
@@ -476,6 +477,11 @@ button {
 
 .create-row2 #amount-input {
     width: 50px;
+}
+
+.create-row2 #amount-input::-webkit-outer-spin-button,
+.create-row2 #amount-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
 
 .create-row2 #unit-input {

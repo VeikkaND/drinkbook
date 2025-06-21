@@ -50,6 +50,19 @@ function Drink() {
         
     }
 
+    const StepsContainer = () => {
+        return(
+            <div>
+                {drink.drink.steps != "1. |" &&
+                    <div>
+                        <h3>Steps</h3>
+                        <Steps text={drink.drink.steps}/> 
+                    </div>
+                }
+            </div>
+        )
+    }
+
     return(
         <div className="drink">
             <h1>{name}</h1>
@@ -71,9 +84,7 @@ function Drink() {
                     {drink ? <IngredientList drink={drink}/> 
                     : <p>loading ingredients</p>}
 
-                    <h3>Steps</h3>
-                    {drink ? <Steps text={drink.drink.steps}/> 
-                    : <p>loading steps</p>}
+                    {drink && <StepsContainer />}
                 </div>
             </div>
             {other.length > 0 && 
