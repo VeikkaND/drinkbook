@@ -25,11 +25,13 @@ function Drink() {
     useEffect(() => {
         const getDrink = async () => {
             const res = await drinkService.getDrinkById(name, id)
-            const stars = await userService.getStarred(email)
             setDrink(res)
             setStars(res.drink.stars)
-            const found = stars.find((d) => d.drink_id == id)
-            if(found) setStarred(true)
+            if(email) {
+                const stars = await userService.getStarred(email)
+                const found = stars.find((d) => d.drink_id == id)
+                if(found) setStarred(true)
+            }
         }
         const getOtherDrinks = async () => {
             const res = await drinkService
