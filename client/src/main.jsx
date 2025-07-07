@@ -5,7 +5,6 @@ import Create from './pages/Create.jsx'
 import Drinks from './pages/Drinks.jsx'
 import { BrowserRouter, Routes, Route } from 'react-router'
 import NavBar from './components/NavBar.jsx'
-import Footer from './components/Footer.jsx'
 import Search from './pages/Search.jsx'
 import Drink from './pages/Drink.jsx'
 import FindDrink from './pages/FindDrink.jsx'
@@ -27,7 +26,6 @@ createRoot(document.getElementById('root')).render(
         <Route path='/find' element={<FindDrink />}/>
         <Route path='/profile/:id' element={<Profile />}/>
       </Routes>
-      <Footer />
     </BrowserRouter>
   </GoogleOAuthProvider>
   

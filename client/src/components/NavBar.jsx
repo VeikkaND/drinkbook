@@ -36,7 +36,7 @@ function NavBar() {
                     }}
                     id="sign-out-button">
                         Log out
-                        <img src={"sign-out.svg"}></img>
+                        <img src={"/sign-out.svg"}></img>
                     </button>
         )
     }
@@ -62,7 +62,7 @@ function NavBar() {
                 id="logged-in-button"
                 className={profileMenu ? "opened" : "normal"}>
                     <p>{username}</p>
-                    <img src={"bars.svg"} 
+                    <img src={"/bars.svg"} 
                     id={profileMenu ? "opened" : "normal"}></img>
                 </button>
                 <div className="profile-menu" style={{
@@ -71,14 +71,14 @@ function NavBar() {
                     <Link to={`/profile/${user_id}`} 
                         onClick={() => setProfileMenu(false)}>
                         Profile
-                        <img src={"profile.svg"}></img>
+                        <img src={"/profile.svg"}></img>
                     </Link>
                     <SignoutButton />
                 </div>
             </div> :
             <div>
                 <button onClick={login} id="sign-in">
-                    <img src="web_light_sq_SI.svg"></img>
+                    <img src="/web_light_sq_SI.svg"></img>
                 </button>
             </div> 
             }

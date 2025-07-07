@@ -22,6 +22,10 @@ button {
     margin-top: 2px;
 }
 
+#root {
+    margin-bottom: 50px;
+}
+
 /* --- navbar ---*/
 
 .navbar {
@@ -343,6 +347,33 @@ button {
 .drink .stars button {
     height: fit-content;
     align-self: center;
+    padding-inline: 3px;
+    padding-block: 0;
+    background-color: white;
+    display: flex;
+    border-radius: 5px;
+    border: solid 1px gray;
+    cursor: pointer;
+}
+
+.star-default {
+    width: 25px;
+    height: 25px;
+}
+
+.star-default path {
+    fill: gray;
+    
+}
+
+.star-on {
+    width: 25px;
+    height: 25px;
+}
+
+.star-on path {
+    fill: rgb(238, 238, 8);
+    
 }
 
 .ingredients {

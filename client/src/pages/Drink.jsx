@@ -1,15 +1,18 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import drinkService from "../services/drink"
+import userService from "../services/user"
 import { useParams } from "react-router"
 import { IngredientList } from "../components/IngredientList"
 import Glass from "../components/Glass"
 import Steps from "../components/Steps"
 import DrinkLink from "../components/DrinkLink"
+import  Star from "../../public/star.svg?react"
 
 function Drink() {
     const [drink, setDrink] = useState(null)
     const [stars, setStars] = useState(0)
+    const [starred, setStarred] = useState(false)
     const [other, setOther] = useState([])
     const params = useParams()
     const name = params.name
@@ -22,8 +25,11 @@ function Drink() {
     useEffect(() => {
         const getDrink = async () => {
             const res = await drinkService.getDrinkById(name, id)
+            const stars = await userService.getStarred(email)
             setDrink(res)
             setStars(res.drink.stars)
+            const found = stars.find((d) => d.drink_id == id)
+            if(found) setStarred(true)
         }
         const getOtherDrinks = async () => {
             const res = await drinkService
@@ -44,8 +50,10 @@ function Drink() {
             .starDrink(drink.drink.drink_id, token, user)
         if(res == "add") {
             setStars(stars+1)
+            setStarred(true)
         } else {
             setStars(stars-1)
+            setStarred(false)
         }
         
     }
@@ -77,7 +85,9 @@ function Drink() {
                     <div className="stars">
                         <p>{stars} stars</p>
                         {token && 
-                        <button onClick={handleStar}>star</button>}
+                        <button onClick={handleStar}>
+                            <Star className={starred ? "star-on" : "star-default"}/>
+                        </button>}
                     </div>
                     
                     <h3>Ingredients</h3>
