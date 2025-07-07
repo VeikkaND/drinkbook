@@ -157,8 +157,6 @@ function Create() {
         setSuggestionShowing(false)
     }
 
-    //TODO make fields mandatory etc.
-    //fix bugs with suggestions
     return(
         <div className="create-main">
             <h1>Create a Drink</h1>
@@ -198,20 +196,23 @@ function Create() {
                                             onChange={(e) => handleChange(e, i)}
                                             id="amount-input"
                                             type="number"
-                                            autoComplete="off"/>
+                                            autoComplete="off"
+                                            required/>
                                             <input name="unit" 
                                             value={ingredient.unit}
                                             placeholder="cl"
                                             onChange={(e) => handleChange(e, i)}
                                             id="unit-input"
-                                            autoComplete="off"/>
+                                            autoComplete="off"
+                                            required/>
                                             <div className="name-input-container">
                                                 <input name="name" 
                                                 value={ingredient.name}
                                                 placeholder="vodka"
                                                 onChange={(e) => handleChange(e, i)}
                                                 id="name-input"
-                                                autoComplete="off"/>
+                                                autoComplete="off"
+                                                required/>
                                                 {(suggestionShowing && suggestionIndex === i) &&
                                                 <div className="input-suggestions">
                                                     {matchingIngredients.map((match, i) => 

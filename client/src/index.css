@@ -490,9 +490,10 @@ button {
 
 .create-row2 {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     gap: 50px;
-    width: 420px;
+    max-width: 420px;
 }
 
 .create-row2 .ingredient-row {
