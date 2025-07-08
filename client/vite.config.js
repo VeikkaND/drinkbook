@@ -11,6 +11,7 @@ export default defineConfig({
       }
     })
   ],
+  base: "/drinkbook/" ,
   server: {
     proxy: {
       "/api": {
