@@ -17,7 +17,7 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <NavBar />
       <Routes>
-        <Route path='/' element={<App />}/>
+        <Route path='/drinkbook' element={<App />}/>
         <Route path='/create' element={<Create />}/>
         <Route path='/drinks' element={<Drinks />}/>
         <Route path='/search' element={<Search />}/>

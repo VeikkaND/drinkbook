@@ -16,7 +16,7 @@ function NavBar() {
             const tokens = await axios.get('/api/google/callback', {
                 params: {code: codeResponse.code}
             })
-            console.log("tokens:", tokens.data)
+            
             //store token & user details in localstorage
             localStorage.setItem("token", tokens.data.token)
             localStorage.setItem("user_id", tokens.data.user.user_id)
@@ -32,11 +32,11 @@ function NavBar() {
             <button onClick={() => {
                     googleLogout()
                     localStorage.clear()
-                    navigate("/")
+                    navigate("/drinkbook/")
                     }}
                     id="sign-out-button">
                         Log out
-                        <img src={"/sign-out.svg"}></img>
+                        <img src={"sign-out.svg"}></img>
                     </button>
         )
     }
@@ -47,7 +47,7 @@ function NavBar() {
 
     return(
         <div className="navbar">
-            <NavLink to="/" id="main" 
+            <NavLink to="/drinkbook/" id="main" 
             onClick={closeProfile}>Home</NavLink>
             <NavLink to="/drinks" id="main" 
             onClick={closeProfile}>Drinks</NavLink>
@@ -62,7 +62,7 @@ function NavBar() {
                 id="logged-in-button"
                 className={profileMenu ? "opened" : "normal"}>
                     <p>{username}</p>
-                    <img src={"/bars.svg"} 
+                    <img src={"bars.svg"} 
                     id={profileMenu ? "opened" : "normal"}></img>
                 </button>
                 <div className="profile-menu" style={{
@@ -71,14 +71,14 @@ function NavBar() {
                     <Link to={`/profile/${user_id}`} 
                         onClick={() => setProfileMenu(false)}>
                         Profile
-                        <img src={"/profile.svg"}></img>
+                        <img src={"profile.svg"}></img>
                     </Link>
                     <SignoutButton />
                 </div>
             </div> :
             <div>
                 <button onClick={login} id="sign-in">
-                    <img src="/web_light_sq_SI.svg"></img>
+                    <img src="web_light_sq_SI.svg"></img>
                 </button>
             </div> 
             }
