@@ -4,6 +4,10 @@ import { googleLogout } from "@react-oauth/google"
 import axios from "axios"
 import { useState } from "react"
 
+const API_URL = import.meta.env.PROD
+    ? import.meta.env.VITE_API_URL
+    : "/api"
+
 function NavBar() {
     const [profileMenu, setProfileMenu] = useState(false)
     const navigate = useNavigate()
@@ -13,7 +17,7 @@ function NavBar() {
     const login = useGoogleLogin({
         flow: "auth-code",
         onSuccess: async (codeResponse) => {
-            const tokens = await axios.get('/api/google/callback', {
+            const tokens = await axios.get(`${API_URL}/google/callback`, {
                 params: {code: codeResponse.code}
             })
             
