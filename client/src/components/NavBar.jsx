@@ -1,44 +1,18 @@
 import { Link, NavLink, useNavigate } from "react-router"
-import { useGoogleLogin } from "@react-oauth/google"
-import { googleLogout } from "@react-oauth/google"
-import axios from "axios"
 import { useState } from "react"
 import Bars from "../../public/bars.svg?react"
 import Profile from "../../public/profile.svg?react"
 import SignOut from "../../public/sign-out.svg?react"
-import Login from "../../public/web_light_sq_SI.svg?react"
-
-const API_URL = import.meta.env.PROD
-    ? import.meta.env.VITE_API_URL
-    : "/api"
 
 function NavBar() {
     const [profileMenu, setProfileMenu] = useState(false)
     const navigate = useNavigate()
     const user_id = localStorage.getItem("user_id")
     const username = localStorage.getItem("user_name")
-    
-    const login = useGoogleLogin({
-        flow: "auth-code",
-        onSuccess: async (codeResponse) => {
-            const tokens = await axios.get(`${API_URL}/google/callback`, {
-                params: {code: codeResponse.code}
-            })
-            
-            //store token & user details in localstorage
-            localStorage.setItem("token", tokens.data.token)
-            localStorage.setItem("user_id", tokens.data.user.user_id)
-            localStorage.setItem("user_name", tokens.data.user.user_name)
-            localStorage.setItem("email", tokens.data.user.email)
-            window.location.reload()
-        },
-        onError: (error) => console.log(error)
-    })
 
     const SignoutButton = () => {
         return(
             <button onClick={() => {
-                    googleLogout()
                     localStorage.clear()
                     navigate("/")
                     }}
@@ -85,11 +59,8 @@ function NavBar() {
                     <SignoutButton />
                 </div>
             </div> :
-            <div>
-                <button onClick={login} id="sign-in">
-                    <Login />
-                </button>
-            </div> 
+            <NavLink to="/login" id="main" 
+            onClick={closeProfile}>Login</NavLink>
             }
             
         </div>

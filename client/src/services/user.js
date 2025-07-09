@@ -25,8 +25,27 @@ const getCreated = async (email) => {
     return res.data
 }
 
+const registerUser = async (name, email, password) => {
+    const res = await axios.post(`${API_URL}/user/register`, {
+        name: name,
+        email: email,
+        password: password
+    })
+    return res.data
+}
+
+const loginUser = async (name, password) => {
+    const res = await axios.post(`${API_URL}/user/login`, {
+        name: name, 
+        password: password
+    })
+    return res.data
+}
+
 export default {
     getUser,
     getStarred,
-    getCreated
+    getCreated,
+    registerUser,
+    loginUser
 }

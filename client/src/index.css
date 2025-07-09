@@ -222,6 +222,22 @@ button {
     font-weight: 400;
 }
 
+/* --- register & login pages --- */
+
+#login-form, #register-form {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+#login-form p, #register-form p {
+    margin: 0;
+}
+
+#login-form input, #register-form input {
+    margin-bottom: 30px;
+}
+
 /* --- search input --- */
 
 .search-input {
