@@ -3,6 +3,10 @@ import { useGoogleLogin } from "@react-oauth/google"
 import { googleLogout } from "@react-oauth/google"
 import axios from "axios"
 import { useState } from "react"
+import Bars from "../../public/bars.svg?react"
+import Profile from "../../public/profile.svg?react"
+import SignOut from "../../public/sign-out.svg?react"
+import Login from "../../public/web_light_sq_SI.svg?react"
 
 const API_URL = import.meta.env.PROD
     ? import.meta.env.VITE_API_URL
@@ -36,11 +40,11 @@ function NavBar() {
             <button onClick={() => {
                     googleLogout()
                     localStorage.clear()
-                    navigate("/drinkbook/")
+                    navigate("/")
                     }}
                     id="sign-out-button">
                         Log out
-                        <img src={"sign-out.svg"}></img>
+                        <SignOut />
                     </button>
         )
     }
@@ -51,7 +55,7 @@ function NavBar() {
 
     return(
         <div className="navbar">
-            <NavLink to="/drinkbook/" id="main" 
+            <NavLink to="/" id="main" 
             onClick={closeProfile}>Home</NavLink>
             <NavLink to="/drinks" id="main" 
             onClick={closeProfile}>Drinks</NavLink>
@@ -66,8 +70,9 @@ function NavBar() {
                 id="logged-in-button"
                 className={profileMenu ? "opened" : "normal"}>
                     <p>{username}</p>
-                    <img src={"bars.svg"} 
-                    id={profileMenu ? "opened" : "normal"}></img>
+                    <Bars 
+                        id={profileMenu ? "opened" : "normal"}> 
+                    </Bars>
                 </button>
                 <div className="profile-menu" style={{
                     display: profileMenu ? "flex" : "none"
@@ -75,14 +80,14 @@ function NavBar() {
                     <Link to={`/profile/${user_id}`} 
                         onClick={() => setProfileMenu(false)}>
                         Profile
-                        <img src={"profile.svg"}></img>
+                        <Profile />
                     </Link>
                     <SignoutButton />
                 </div>
             </div> :
             <div>
                 <button onClick={login} id="sign-in">
-                    <img src="web_light_sq_SI.svg"></img>
+                    <Login />
                 </button>
             </div> 
             }

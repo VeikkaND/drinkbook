@@ -106,8 +106,9 @@ button {
     text-decoration: underline;
 }
 
-.profile-menu a img {
+.profile-menu a svg {
     width: 25px;
+    height: 25px;
 }
 
 #logged-in-button {
@@ -140,8 +141,9 @@ button {
     font-weight: 300;
 }
 
-#logged-in-button img {
+#logged-in-button svg {
     width: 25px;
+    height: 25px;
 }
 
 #logged-in-button #normal {
@@ -171,8 +173,9 @@ button {
     text-decoration: underline;
 }
 
-#sign-out-button img {
+#sign-out-button svg {
     width: 25px;
+    height: 25px;
 }
 
 /* --- content --- */ 

@@ -14,10 +14,10 @@ import Profile from './pages/Profile.jsx'
 
 createRoot(document.getElementById('root')).render(
   <GoogleOAuthProvider clientId='293628245001-eeej0q3nlae34si39n8n8cdd4egf7sg8.apps.googleusercontent.com'>
-    <BrowserRouter>
+    <BrowserRouter basename='/drinkbook'>
       <NavBar />
       <Routes>
-        <Route path='/drinkbook' element={<App />}/>
+        <Route path='' element={<App />}/>
         <Route path='/create' element={<Create />}/>
         <Route path='/drinks' element={<Drinks />}/>
         <Route path='/search' element={<Search />}/>

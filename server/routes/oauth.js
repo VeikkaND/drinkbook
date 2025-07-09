@@ -17,19 +17,24 @@ router.get("/", async (req, res) => {
         redirect_uri: "http://localhost:5173",
         grant_type: "authorization_code"
     }
+    console.log("data: ", data)
+    console.log("redirect_uri: ", data.redirect_uri)
     
     //fetch id token for user
     const response = await fetch(GOOGLE_ACCESS_TOKEN_URL, {
         method: "POST",
         body: JSON.stringify(data)
     })
+    console.log("response: ", response)
     const access_token_data = await response.json()
     const {id_token} = access_token_data
+    console.log("access_token_data: ", access_token_data)
 
     //fetch user info for id token
     const token_info_response = await fetch(
         `${process.env.GOOGLE_TOKEN_INFO_URL}?id_token=${id_token}`
     )
+    console.log("token_info: ", token_info_response)
     const {email, name} = await token_info_response.json()
 
     let user = await db.any( // check if account exists in db
