@@ -11,7 +11,7 @@ export default defineConfig({
       }
     })
   ],
-  base: "/drinkbook" ,
+  base: "/drinkbook/" ,
   server: {
     proxy: {
       "/api": {
@@ -19,11 +19,6 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "")
       }
-    },
-    host: true,
-    port: 5173,
-    watch: {
-      usePolling: true
     }
   }
 })
